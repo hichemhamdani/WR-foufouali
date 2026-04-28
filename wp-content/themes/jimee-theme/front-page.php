@@ -229,6 +229,8 @@ endif;
                 </div>
             </div>
 
+            <div class="hero__cards-row">
+
             <!-- Carte A — Routine Solaire -->
             <div class="hero__card hero__card--a">
                 <div class="hero__card-copy">
@@ -252,6 +254,8 @@ endif;
                     <img src="<?php echo esc_url( $img_base . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">
                 </div>
             </div>
+
+            </div><!-- /.hero__cards-row -->
 
         </div><!-- /.hero__grid -->
     </div>
