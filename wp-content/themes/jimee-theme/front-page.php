@@ -28,15 +28,6 @@ $home_cats = get_terms([
 ]);
 if ( is_wp_error( $home_cats ) ) $home_cats = [];
 
-/* Images indexées par position (0-5) — identiques à la maquette */
-$cat_photos = [
-    0 => 'https://images.pexels.com/photos/7038177/pexels-photo-7038177.jpeg?auto=compress&cs=tinysrgb&w=700&q=80',
-    1 => $html_imgs . 'body-care-category-homepage-highlight.jpg',
-    2 => $html_imgs . 'cheveix-category-homepage-highlight.png',
-    3 => 'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg?auto=compress&cs=tinysrgb&w=500&q=80',
-    4 => $html_imgs . 'complement-category-homepage-highlight.png',
-    5 => $html_imgs . rawurlencode( 'hygiène-category-homepage-highlight.png' ),
-];
 
 /* ── On-sale products ────────────────────────────────── */
 $on_sale_ids = wc_get_product_ids_on_sale();
@@ -280,7 +271,8 @@ endif;
             <?php
             $cat_classes = [ 'cat--wide', 'cat--tall', '', '', '', '' ];
             foreach ( $home_cats as $i => $cat ) :
-                $photo   = $cat_photos[ $i ] ?? '';
+                $thumbnail_id = get_term_meta( $cat->term_id, 'thumbnail_id', true );
+                $photo        = $thumbnail_id ? wp_get_attachment_image_url( $thumbnail_id, 'large' ) : '';
                 $cls     = isset( $cat_classes[ $i ] ) ? $cat_classes[ $i ] : '';
                 $num_cls = 'cat--' . ( $i + 1 );
                 $delay   = $i > 0 ? ' reveal-delay-' . min( $i, 5 ) : '';
