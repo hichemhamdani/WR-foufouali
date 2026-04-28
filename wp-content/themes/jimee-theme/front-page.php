@@ -224,7 +224,6 @@ endif;
                     <div class="hero__card-tag">Sélection du moment</div>
                     <div class="hero__card-title">Routine Solaire<br>SPF &amp; Hydratation</div>
                     <div class="hero__card-sub">Protégez et hydratez votre peau avec nos meilleurs soins solaires.</div>
-                    <a href="<?php echo esc_url( home_url( '/categories/solaire/' ) ); ?>" class="hero__card-cta">Voir la sélection →</a>
                 </div>
                 <div class="hero__card-media">
                     <img src="https://images.pexels.com/photos/31552021/pexels-photo-31552021.jpeg?auto=compress&cs=tinysrgb&w=500&q=85" alt="Routine solaire">
@@ -237,7 +236,6 @@ endif;
                     <div class="hero__card-tag">Offre limitée</div>
                     <div class="hero__card-pct">−30%<span> OFF</span></div>
                     <div class="hero__card-title">Sur tous<br>les soins corps</div>
-                    <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="hero__card-cta">En profiter →</a>
                 </div>
                 <div class="hero__card-media">
                     <img src="<?php echo esc_url( $img_base . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">

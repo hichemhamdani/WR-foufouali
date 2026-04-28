@@ -178,7 +178,7 @@
 
 .hero__card-copy {
     flex: 0 0 58%; padding: 32px 20px 32px 36px;
-    display: flex; flex-direction: column; justify-content: center; z-index: 1;
+    display: flex; flex-direction: column; justify-content: center; gap: 10px;
 }
 .hero__card--a .hero__card-copy { color: var(--black); }
 .hero__card--b .hero__card-copy { color: #fff; }
@@ -186,18 +186,18 @@
 .hero__card-tag {
     font-size: 10px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 2px;
-    margin-bottom: 10px; color: var(--g500);
+    color: var(--g500);
 }
 .hero__card-pct {
     font-family: 'Poppins', sans-serif; font-size: 54px; font-weight: 900;
-    line-height: 1; letter-spacing: -2px; color: #fff; margin-bottom: 6px;
+    line-height: 1; letter-spacing: -2px; color: #fff;
 }
 .hero__card-pct span { font-size: 28px; letter-spacing: -1px; }
 .hero__card-title {
     font-family: 'Poppins', sans-serif; font-size: 19px; font-weight: 700;
-    line-height: 1.25; margin-bottom: 8px;
+    line-height: 1.25;
 }
-.hero__card-sub { font-size: 12.5px; line-height: 1.6; margin-bottom: 20px; color: var(--hp-muted); }
+.hero__card-sub { font-size: 12.5px; line-height: 1.6; color: var(--hp-muted); }
 .hero__card--b .hero__card-sub { color: rgba(255,255,255,0.6); }
 
 .hero__card-cta {
