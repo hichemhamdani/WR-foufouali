@@ -455,6 +455,7 @@
 .brands__row {
     display: flex; gap: 10px; overflow-x: auto;
     padding-bottom: 4px; scrollbar-width: none;
+    padding-top: 20px;
 }
 .brands__row::-webkit-scrollbar { display: none; }
 .brands__row .brand-card {
