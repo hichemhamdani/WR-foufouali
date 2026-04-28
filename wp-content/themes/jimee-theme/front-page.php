@@ -172,6 +172,7 @@ function hp_pc( $product_id, $delay = '', $badge_override = null ) {
     echo '<div class="pc__img-wrap">';
     echo '<a href="' . esc_url( $url ) . '" class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></a>';
     echo '<div class="pc__overlay"><button class="pc__add cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '">+ Ajouter au panier</button></div>';
+    echo '<button class="pc__cart-icon cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '" aria-label="Ajouter au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>';
     echo '</div>';
     echo '<div class="pc__body">';
     if ( $brand ) echo '<div class="pc__brand">' . esc_html( $brand ) . '</div>';
