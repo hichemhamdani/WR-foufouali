@@ -90,8 +90,12 @@
                     'meta_key'   => 'order',
                     'order'      => 'ASC',
                     'exclude'    => jimee_excluded_cats(),
-                    'number'     => 8,
+                    'number'     => 10,
                 ]);
+                if ( ! is_wp_error( $nav_cats ) && count( $nav_cats ) == 10 ) {
+                    $extra    = array_splice( $nav_cats, 8 );
+                    $nav_cats = array_merge( $extra, $nav_cats );
+                }
                 $current_term_id = is_product_category() ? get_queried_object_id() : 0;
                 if ( ! is_wp_error( $nav_cats ) ) {
                     foreach ( $nav_cats as $cat ) {
