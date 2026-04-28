@@ -901,11 +901,13 @@
 }
 
 @media (max-width: 768px) {
-    .header__main { grid-template-columns: 1fr auto; gap: 12px; padding: 12px 0; }
+    .header__main { grid-template-columns: 1fr auto; gap: 16px; padding: 12px 0; }
     .header__logo { font-size: 20px; letter-spacing: 1px; }
     .header__search { display: none; }
+    .header__actions > a:first-child { display: none; }
     .header__action-group .header__action-label { display: none; }
     .header__action-group { gap: 0; }
+    .header__actions { gap: 0; }
     .header__divider { display: none; }
     .topbar__msg { font-size: 11.5px; gap: 6px; }
     .footer__top { grid-template-columns: 1fr 1fr; gap: 24px; }
