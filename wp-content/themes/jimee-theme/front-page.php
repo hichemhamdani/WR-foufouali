@@ -249,7 +249,7 @@ endif;
                     <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="hero__card-cta">En profiter →</a>
                 </div>
                 <div class="hero__card-media">
-                    <img src="<?php echo esc_url( $html_imgs . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">
+                    <img src="<?php echo esc_url( $img_base . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">
                 </div>
             </div>
 
