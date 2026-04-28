@@ -108,7 +108,7 @@ if ( ! $new_query->have_posts() ) {
 }
 
 /* ── Brands slider ───────────────────────────────────── */
-$curated_brand_ids = [ 3503, 3495, 1570, 3657, 1540, 3683, 3715, 3477, 1550, 3354, 3364, 3716 ];
+$curated_brand_ids = [ 3503, 3495, 1570, 3657, 1540, 3683 ];
 $home_brands = get_terms([
     'taxonomy'   => 'product_brand',
     'include'    => $curated_brand_ids,

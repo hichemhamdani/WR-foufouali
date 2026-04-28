@@ -5,7 +5,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'JIMEE_VERSION', '3.0.7' );
+define( 'JIMEE_VERSION', '3.0.8' );
 define( 'JIMEE_DIR', get_template_directory() );
 define( 'JIMEE_URI', get_template_directory_uri() );
 

@@ -463,19 +463,17 @@
 .pb:hover .pb__photo { transform: scale(1.04); }
 
 /* ========== BRANDS ROW (homepage, logos simples) ========== */
-.brands { padding: 0 0 72px; }
+.brands { padding: 0 0 34px; }
 .brands__row {
-    display: flex; gap: 10px; overflow-x: auto;
-    padding-bottom: 4px; scrollbar-width: none;
-    padding-top: 20px;
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 12px; padding-top: 20px;
 }
-.brands__row::-webkit-scrollbar { display: none; }
 .brands__row .brand-card {
-    flex-shrink: 0 !important; width: 160px !important; height: 76px !important;
+    width: auto !important; height: 110px !important;
     background: #fff !important; border: 1.5px solid var(--hp-border) !important;
     border-radius: 16px !important;
     display: flex !important; align-items: center !important; justify-content: center !important;
-    padding: 10px 20px !important; cursor: pointer;
+    padding: 16px 24px !important; cursor: pointer;
     transition: all 200ms;
     flex-direction: row !important; gap: 0 !important;
     box-shadow: none !important; transform: none !important;
@@ -486,7 +484,7 @@
     transform: translateY(-2px) !important;
 }
 .brands__row .brand-card img {
-    max-width: 120px !important; max-height: 44px !important;
+    max-width: 140px !important; max-height: 60px !important;
     width: auto !important; height: auto !important;
     object-fit: contain !important; border-radius: 0 !important;
     filter: grayscale(100%) opacity(0.55);
@@ -610,6 +608,8 @@
     }
     .flash__products::-webkit-scrollbar { display: none; }
     .flash__prod { min-width: 220px; flex: 0 0 220px; scroll-snap-align: start; }
+    .brands__row { grid-template-columns: repeat(3, 1fr); }
+    .brands__row .brand-card { height: 80px !important; padding: 10px 12px !important; }
     .pb { grid-template-columns: 1fr; }
     .pb__content { padding: 40px 28px; }
     .pb__media { min-height: 240px; }
