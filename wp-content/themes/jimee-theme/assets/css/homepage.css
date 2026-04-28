@@ -166,7 +166,12 @@
 }
 
 /* Wrapper transparent sur desktop, slider sur mobile */
-.hero__cards-row { display: contents; }
+.hero__cards-row {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
 
 /* Petites cartes hero */
 .hero__card {
