@@ -28,6 +28,17 @@ $home_cats = get_terms([
 ]);
 if ( is_wp_error( $home_cats ) ) $home_cats = [];
 
+/* Overrides positionnels : position => term_id */
+$cat_overrides = [ 2 => 685, 5 => 1034 ];
+foreach ( $cat_overrides as $pos => $tid ) {
+    $t = get_term( $tid, 'product_cat' );
+    if ( $t && ! is_wp_error( $t ) ) {
+        $home_cats = array_values( array_filter( $home_cats, fn( $c ) => $c->term_id !== $tid ) );
+        array_splice( $home_cats, $pos, 0, [ $t ] );
+        $home_cats = array_slice( $home_cats, 0, 6 );
+    }
+}
+
 
 /* ── On-sale products ────────────────────────────────── */
 $on_sale_ids = wc_get_product_ids_on_sale();
