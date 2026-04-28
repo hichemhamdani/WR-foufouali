@@ -542,7 +542,7 @@ endif;
 
             <div class="trust__item reveal">
                 <div class="trust__icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/truck_819438.svg' ); ?>" alt="Livraison rapide" width="72" height="72">
                 </div>
                 <div class="trust__title">Livraison rapide</div>
                 <div class="trust__sub">Recevez vos commandes en 48h partout en Algérie.</div>
@@ -550,7 +550,7 @@ endif;
 
             <div class="trust__item reveal reveal-delay-1">
                 <div class="trust__icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/credit-card_657076.svg' ); ?>" alt="Paiement sécurisé" width="72" height="72">
                 </div>
                 <div class="trust__title">Paiement sécurisé</div>
                 <div class="trust__sub">CIB, Edahabia, virement ou paiement à la livraison.</div>
@@ -558,7 +558,7 @@ endif;
 
             <div class="trust__item reveal reveal-delay-2">
                 <div class="trust__icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/beauty_14535135.svg' ); ?>" alt="Produits certifiés" width="72" height="72">
                 </div>
                 <div class="trust__title">Produits Certifiés</div>
                 <div class="trust__sub">100% authentiques, issus des distributeurs officiels.</div>
@@ -566,7 +566,7 @@ endif;
 
             <div class="trust__item reveal reveal-delay-3">
                 <div class="trust__icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0F1A14" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                 </div>
                 <div class="trust__title">Retour Facile</div>
                 <div class="trust__sub">7 jours pour changer d'avis, retour simple et gratuit.</div>

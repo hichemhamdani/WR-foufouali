@@ -231,8 +231,9 @@
 .trust { padding: 72px 0; background: #fff; }
 .trust__inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .trust__item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 20px; }
-.trust__icon { width: 88px; height: 88px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
-.trust__icon svg { width: 48px; height: 48px; stroke: var(--g700); }
+.trust__icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-bottom: 22px; }
+.trust__icon svg { width: 28px; height: 28px; stroke: black; }
+.trust__icon img { width: 40px; height: 40px; object-fit: contain; }
 .trust__title { font-family: 'Poppins', sans-serif; font-size: 21px; font-weight: 700; color: var(--black); margin-bottom: 12px; line-height: 1.2; }
 .trust__sub { font-size: 14px; color: var(--hp-muted); line-height: 1.7; max-width: 220px; }
 

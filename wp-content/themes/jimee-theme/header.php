@@ -111,7 +111,7 @@
                     }
                 }
                 ?>
-                <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="nav__item">Marques</a>
+                <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="nav__item nav__item--marques">Marques</a>
                 <div class="nav__sep"></div>
                 <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="nav__item nav__item--promos">Bons Plans &amp; Promos</a>
             </div>
