@@ -29,7 +29,7 @@ $home_cats = get_terms([
 if ( is_wp_error( $home_cats ) ) $home_cats = [];
 
 /* Overrides positionnels : position => term_id */
-$cat_overrides = [ 2 => 685, 5 => 1034 ];
+$cat_overrides = [ 0 => 564, 1 => 1077, 2 => 685, 5 => 1034 ];
 foreach ( $cat_overrides as $pos => $tid ) {
     $t = get_term( $tid, 'product_cat' );
     if ( $t && ! is_wp_error( $t ) ) {
