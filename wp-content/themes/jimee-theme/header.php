@@ -100,6 +100,7 @@
                 if ( ! is_wp_error( $nav_cats ) ) {
                     foreach ( $nav_cats as $cat ) {
                         if ( in_array( $cat->slug, [ 'uncategorized', 'non-classe', 'non-categorise' ], true ) ) continue;
+                        if ( $cat->term_id === 3229 ) continue;
                         $active_class = ( $cat->term_id === $current_term_id ) ? ' nav__item--active' : '';
                         printf(
                             '<a href="%s" class="nav__item%s">%s</a>',
@@ -110,6 +111,7 @@
                     }
                 }
                 ?>
+                <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="nav__item">Marques</a>
                 <div class="nav__sep"></div>
                 <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="nav__item nav__item--promos">Bons Plans &amp; Promos</a>
             </div>
