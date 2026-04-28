@@ -111,7 +111,7 @@ $promo         = jimee_get_promo_banner();
 $promo_img_id  = $promo['image'] ?? 0;
 $promo_img_url = $promo_img_id
     ? wp_get_attachment_image_url( $promo_img_id, 'large' )
-    : $html_imgs . 'homepage-pub-nobg.png';
+    : $img_base . 'homepage-pub-nobg.png';
 
 /* ── Helper: product card (.pc style) ───────────────── */
 if ( ! function_exists( 'hp_pc' ) ) :
