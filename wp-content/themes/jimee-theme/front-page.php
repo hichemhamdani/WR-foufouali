@@ -1,24 +1,68 @@
 <?php
 /**
- * Homepage — 12 sections dynamiques.
+ * Homepage — Layout éditorial Foufou Ali.
  */
 
 get_header();
 
-/* ── Category icons ─────────────────────── */
+/* ── Base paths ──────────────────────────────────────── */
+$img_base  = JIMEE_URI . '/assets/img/';
+$html_imgs = home_url( '/html_version/images/' );
+
+/* ── Hero content (slide 1 from admin) ───────────────── */
+$hero_slides = jimee_get_hero_slides();
+$slide       = $hero_slides[0] ?? [];
+$hero_photo  = ! empty( $slide['image'] )
+    ? wp_get_attachment_image_url( $slide['image'], 'full' )
+    : $html_imgs . 'homepage-hero-2.png';
+
+/* ── Categories (top 6) ──────────────────────────────── */
 $home_cats = get_terms([
     'taxonomy'   => 'product_cat',
     'parent'     => 0,
     'hide_empty' => true,
-    'orderby'    => 'meta_value_num',
-    'meta_key'   => 'order',
-    'order'      => 'ASC',
+    'orderby'    => 'count',
+    'order'      => 'DESC',
+    'number'     => 6,
     'exclude'    => jimee_excluded_cats(),
 ]);
 if ( is_wp_error( $home_cats ) ) $home_cats = [];
 
-/* ── Sélection du mois (featured products) ─ */
-$best_query = new WP_Query([
+/* Images indexées par position (0-5) — identiques à la maquette */
+$cat_photos = [
+    0 => 'https://images.pexels.com/photos/7038177/pexels-photo-7038177.jpeg?auto=compress&cs=tinysrgb&w=700&q=80',
+    1 => $html_imgs . 'body-care-category-homepage-highlight.jpg',
+    2 => $html_imgs . 'cheveix-category-homepage-highlight.png',
+    3 => 'https://images.pexels.com/photos/3662667/pexels-photo-3662667.jpeg?auto=compress&cs=tinysrgb&w=500&q=80',
+    4 => $html_imgs . 'complement-category-homepage-highlight.png',
+    5 => $html_imgs . rawurlencode( 'hygiène-category-homepage-highlight.png' ),
+];
+
+/* ── On-sale products ────────────────────────────────── */
+$on_sale_ids = wc_get_product_ids_on_sale();
+$has_sale    = ! empty( $on_sale_ids );
+if ( $has_sale ) shuffle( $on_sale_ids );
+
+$promo_query = new WP_Query([
+    'post_type'      => 'product',
+    'posts_per_page' => 8,
+    'post__in'       => $has_sale ? array_slice( $on_sale_ids, 0, 30 ) : [-1],
+    'orderby'        => 'post__in',
+    'post_status'    => 'publish',
+    'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
+]);
+
+$flash_query = $has_sale ? new WP_Query([
+    'post_type'      => 'product',
+    'posts_per_page' => 3,
+    'post__in'       => array_slice( $on_sale_ids, 0, 10 ),
+    'orderby'        => 'post__in',
+    'post_status'    => 'publish',
+    'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
+]) : null;
+
+/* ── Popular products (featured, fallback random) ────── */
+$popular_query = new WP_Query([
     'post_type'      => 'product',
     'posts_per_page' => 8,
     'post_status'    => 'publish',
@@ -30,8 +74,17 @@ $best_query = new WP_Query([
     ]],
     'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
 ]);
+if ( ! $popular_query->have_posts() ) {
+    $popular_query = new WP_Query([
+        'post_type'      => 'product',
+        'posts_per_page' => 8,
+        'post_status'    => 'publish',
+        'orderby'        => 'rand',
+        'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
+    ]);
+}
 
-/* ── New arrivals (last 30 days) ────────── */
+/* ── New arrivals ────────────────────────────────────── */
 $new_query = new WP_Query([
     'post_type'      => 'product',
     'posts_per_page' => 4,
@@ -41,7 +94,6 @@ $new_query = new WP_Query([
     'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
     'date_query'     => [[ 'after' => '30 days ago' ]],
 ]);
-// Fallback if no recent products
 if ( ! $new_query->have_posts() ) {
     $new_query = new WP_Query([
         'post_type'      => 'product',
@@ -53,9 +105,8 @@ if ( ! $new_query->have_posts() ) {
     ]);
 }
 
-/* ── Brands for slider (curated) ─────────── */
+/* ── Brands slider ───────────────────────────────────── */
 $curated_brand_ids = [ 3503, 3495, 1570, 3657, 1540, 3683, 3715, 3477, 1550, 3354, 3364, 3716 ];
-// L'Oréal, Kérastase, Filorga, SKIN 1004, Avène, Touché, Dior, Huda Beauty, CeraVe, Burberry, Caudalie, Chanel
 $home_brands = get_terms([
     'taxonomy'   => 'product_brand',
     'include'    => $curated_brand_ids,
@@ -64,245 +115,474 @@ $home_brands = get_terms([
 ]);
 if ( is_wp_error( $home_brands ) ) $home_brands = [];
 
-/* ── Promo products ─────────────────────── */
-$on_sale_ids = wc_get_product_ids_on_sale();
-$has_sale = ! empty( $on_sale_ids );
-?>
+/* ── Promo banner ────────────────────────────────────── */
+$promo         = jimee_get_promo_banner();
+$promo_img_id  = $promo['image'] ?? 0;
+$promo_img_url = $promo_img_id
+    ? wp_get_attachment_image_url( $promo_img_id, 'large' )
+    : $html_imgs . 'homepage-pub-nobg.png';
 
-<!-- ═══════ 1. HERO SLIDER ═══════ -->
-<?php
-$img_base    = JIMEE_URI . '/assets/img/';
-$hero_slides = jimee_get_hero_slides();
-?>
-<div class="hero-wrapper">
-    <div class="hero" id="hero">
-        <div class="hero-slides">
-            <?php foreach ( $hero_slides as $i => $slide ) :
-                $slide_img = ! empty( $slide['image'] ) ? wp_get_attachment_image_url( $slide['image'], 'full' ) : '';
-                $slide_style = $slide_img ? 'background-image:url(' . esc_url( $slide_img ) . ')' : '';
-                $heading_tag = $i === 0 ? 'h1' : 'h2';
-            ?>
-            <div class="hero-slide<?php echo $i === 0 ? ' active' : ''; ?>">
-                <div class="hero-content">
-                    <div class="hero-eyebrow"><?php echo esc_html( $slide['eyebrow'] ?? '' ); ?></div>
-                    <<?php echo $heading_tag; ?> class="hero-title"><?php echo wp_kses( $slide['title'] ?? '', [ 'em' => [] ] ); ?></<?php echo $heading_tag; ?>>
-                    <p class="hero-desc"><?php echo esc_html( $slide['desc'] ?? '' ); ?></p>
-                    <?php if ( ! empty( $slide['link'] ) ) : ?>
-                    <a href="<?php echo esc_url( home_url( $slide['link'] ) ); ?>" class="hero-cta"><?php echo esc_html( $slide['cta'] ?? 'Découvrir' ); ?> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-                    <?php endif; ?>
-                </div>
-                <div class="hero-image"<?php if ( $slide_style ) echo ' style="' . esc_attr( $slide_style ) . '"'; ?>></div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <div class="hero-dots">
-            <?php foreach ( $hero_slides as $i => $s ) : ?>
-            <button class="hero-dot<?php echo $i === 0 ? ' active' : ''; ?>"></button>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
+/* ── Helper: product card (.pc style) ───────────────── */
+if ( ! function_exists( 'hp_pc' ) ) :
+function hp_pc( $product_id, $delay = '', $badge_override = null ) {
+    $product = wc_get_product( $product_id );
+    if ( ! $product ) return;
 
-<!-- ═══════ 2. CATEGORIES (infinite scroll + fade) ═══════ -->
-<?php
-$cat_photos = [
-    'visage'      => 'masque-visage-routine-skincare.jpg',
-    'cheveux'     => 'soin-cheveux-routine-capillaire.jpg',
-    'solaire'     => 'protection-solaire-ete-piscine.jpg',
-    'corps'       => 'spa-hammam-detente-bien-etre.jpg',
-    'homme'       => 'soin-visage-homme-serum-huile.jpg',
-    'maquillage'  => 'peau-glowy-maquillage-naturel.jpg',
-    'hygiene'     => 'lavage-mains-mousse-savon-hygiene.jpg',
-    'k-beauty'    => 'tocobo-cotton-airy-sun-stick-spf50.jpg',
-    'coffrets-cadeaux' => 'gucci-flora-eau-de-parfum.jpg',
-    'accesoires'  => 'accessoires-beaute-outils-coiffure.webp',
-];
+    $brand_terms = wp_get_post_terms( $product_id, 'product_brand' );
+    $brand       = ! empty( $brand_terms ) ? strtoupper( $brand_terms[0]->name ) : '';
+    $img_url     = get_the_post_thumbnail_url( $product_id, 'woocommerce_thumbnail' ) ?: wc_placeholder_img_src();
+    $on_sale     = $product->is_on_sale();
+    $is_new      = ( time() - get_post_time( 'U', false, $product_id ) ) < 30 * DAY_IN_SECONDS;
+    $featured    = $product->is_featured();
+    $price       = (float) $product->get_price();
+    $reg         = (float) $product->get_regular_price();
+    $sale_p      = (float) $product->get_sale_price();
+    $rating      = (float) $product->get_average_rating();
+    $reviews     = (int)   $product->get_review_count();
+    $url         = get_permalink( $product_id );
+    $title       = get_the_title( $product_id );
 
-// Build category items array (to duplicate for infinite scroll)
-$cat_items = [];
-if ( ! empty( $home_cats ) ) {
-    foreach ( $home_cats as $cat ) {
-        if ( in_array( $cat->slug, [ 'uncategorized', 'non-classe', 'non-categorise' ], true ) ) continue;
-        $cat_items[] = $cat;
-    }
+    $stock_qty   = $product->managing_stock() ? (int) $product->get_stock_quantity() : null;
+    $low_stock   = $stock_qty !== null && $stock_qty > 0 && $stock_qty <= 5;
+
+    if ( $badge_override !== null ) {
+        $tag = $badge_override['tag'];
+        $tc  = $badge_override['tc'];
+    } elseif ( $on_sale && $reg > 0 ) {
+        $pct = round( ( 1 - $sale_p / $reg ) * 100 );
+        $tag = "−{$pct}%"; $tc = 'tag--orange';
+    } elseif ( $low_stock )    { $tag = 'Stock limité'; $tc = 'tag--red'; }
+    elseif ( $featured )       { $tag = 'Bestseller';   $tc = 'tag--green'; }
+    elseif ( $is_new )         { $tag = 'Nouveau';      $tc = 'tag--green'; }
+    else                       { $tag = '';              $tc = ''; }
+
+    $stars = '';
+    for ( $i = 0; $i < 5; $i++ ) $stars .= $i < round( $rating ) ? '★' : '☆';
+
+    $display_price = ( $on_sale && $sale_p > 0 )
+        ? number_format( $sale_p, 0, ',', ' ' )
+        : number_format( $price, 0, ',', ' ' );
+
+    $cls = 'pc reveal' . ( $delay ? ' ' . esc_attr( $delay ) : '' );
+    echo '<div class="' . $cls . '">';
+    if ( $tag ) echo '<div class="pc__badges"><span class="tag ' . esc_attr( $tc ) . '">' . esc_html( $tag ) . '</span></div>';
+    echo '<button class="pc__wish wishlist-btn" data-product-id="' . esc_attr( $product_id ) . '" aria-label="Favoris">🤍</button>';
+    echo '<div class="pc__img-wrap">';
+    echo '<a href="' . esc_url( $url ) . '" class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></a>';
+    echo '<div class="pc__overlay"><button class="pc__add cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '">+ Ajouter au panier</button></div>';
+    echo '</div>';
+    echo '<div class="pc__body">';
+    if ( $brand ) echo '<div class="pc__brand">' . esc_html( $brand ) . '</div>';
+    echo '<a href="' . esc_url( $url ) . '" class="pc__name">' . esc_html( $title ) . '</a>';
+    if ( $rating > 0 ) echo '<div class="pc__stars">' . $stars . ' <span>(' . $reviews . ')</span></div>';
+    echo '<div><span class="pc__price">' . $display_price . ' DA</span>';
+    if ( $on_sale && $reg > 0 ) echo '<span class="pc__old">' . number_format( $reg, 0, ',', ' ' ) . ' DA</span>';
+    echo '</div></div></div>';
 }
+endif;
+?>
 
-if ( ! empty( $cat_items ) ) : ?>
-<section class="section reveal">
-    <div class="section-header">
-        <div class="section-eyebrow">Explorer par catégorie</div>
-        <h2 class="section-title">Nos <em>catégories</em></h2>
-    </div>
-    <div class="categories-wrapper">
-        <div class="categories-track">
-            <?php
-            // Render twice for seamless infinite loop
-            for ( $loop = 0; $loop < 2; $loop++ ) :
-                foreach ( $cat_items as $cat ) :
-                    $photo = isset( $cat_photos[ $cat->slug ] ) ? $img_base . $cat_photos[ $cat->slug ] : '';
-            ?>
-            <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>" class="category-circle">
-                <div class="category-circle-img">
-                    <?php if ( $photo ) : ?>
-                        <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $cat->name ); ?>" loading="lazy">
+<!-- ═══════════════════════════════════════════════════════════
+     1. HERO ÉDITORIAL
+════════════════════════════════════════════════════════════ -->
+<section class="hero-editorial">
+    <div class="container">
+        <div class="hero__grid">
+
+            <!-- Grande carte principale (rang 1, pleine largeur) -->
+            <div class="hero__main">
+                <div class="hero__copy">
+                    <?php if ( ! empty( $slide['eyebrow'] ) ) : ?>
+                    <div class="hero__eyebrow"><?php echo esc_html( $slide['eyebrow'] ); ?></div>
                     <?php else : ?>
-                        <div style="width:100%;height:100%;background:var(--warm-bg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#999"><?php echo esc_html( mb_substr( $cat->name, 0, 3 ) ); ?></div>
+                    <div class="hero__eyebrow">Offre exclusive · Printemps 2026</div>
                     <?php endif; ?>
+
+                    <h1 class="hero__h1">
+                        <?php if ( ! empty( $slide['title'] ) ) :
+                            echo wp_kses( $slide['title'], [ 'em' => [], 'br' => [] ] );
+                        else : ?>
+                        Soins <em>premium</em><br>à prix accessible
+                        <?php endif; ?>
+                    </h1>
+
+                    <p class="hero__sub">
+                        <?php echo ! empty( $slide['desc'] )
+                            ? esc_html( $slide['desc'] )
+                            : 'Jusqu\'à 35% de remise sur une sélection de nos meilleures ventes soins visage et cosmétiques.'; ?>
+                    </p>
+                    <p class="hero__legal">*Offre valable jusqu'au 30 juin 2026. <a href="<?php echo esc_url( home_url( '/cgv/' ) ); ?>">Voir conditions</a></p>
+
+                    <div class="hero__actions">
+                        <a href="<?php echo esc_url( home_url( ! empty( $slide['link'] ) ? $slide['link'] : '/boutique/' ) ); ?>" class="cta cta--solid">
+                            <?php echo esc_html( $slide['cta'] ?? 'Découvrir' ); ?>
+                            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14" height="14"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="cta cta--outline">Voir les promos</a>
+                    </div>
                 </div>
-                <div class="category-circle-name"><?php echo esc_html( $cat->name ); ?></div>
-            </a>
-            <?php endforeach; endfor; ?>
+
+                <div class="hero__illus">
+                    <img src="<?php echo esc_url( $hero_photo ); ?>" alt="Soins cosmétiques premium" class="hero__illus-photo">
+                </div>
+            </div>
+
+            <!-- Carte A — Routine Solaire -->
+            <div class="hero__card hero__card--a">
+                <div class="hero__card-copy">
+                    <div class="hero__card-tag">Sélection du moment</div>
+                    <div class="hero__card-title">Routine Solaire<br>SPF &amp; Hydratation</div>
+                    <div class="hero__card-sub">Protégez et hydratez votre peau avec nos meilleurs soins solaires.</div>
+                    <a href="<?php echo esc_url( home_url( '/categories/solaire/' ) ); ?>" class="hero__card-cta">Voir la sélection →</a>
+                </div>
+                <div class="hero__card-media">
+                    <img src="https://images.pexels.com/photos/31552021/pexels-photo-31552021.jpeg?auto=compress&cs=tinysrgb&w=500&q=85" alt="Routine solaire">
+                </div>
+            </div>
+
+            <!-- Carte B — Promo Corps -->
+            <div class="hero__card hero__card--b">
+                <div class="hero__card-copy">
+                    <div class="hero__card-tag">Offre limitée</div>
+                    <div class="hero__card-pct">−30%<span> OFF</span></div>
+                    <div class="hero__card-title">Sur tous<br>les soins corps</div>
+                    <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="hero__card-cta">En profiter →</a>
+                </div>
+                <div class="hero__card-media">
+                    <img src="<?php echo esc_url( $html_imgs . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">
+                </div>
+            </div>
+
+        </div><!-- /.hero__grid -->
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     2. TRUST BAR
+════════════════════════════════════════════════════════════ -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     3. CATÉGORIES
+════════════════════════════════════════════════════════════ -->
+<?php if ( ! empty( $home_cats ) ) : ?>
+<section class="cats">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Nos <em>Catégories</em></div>
+                <div class="sh__sub">Trouvez rapidement ce dont vous avez besoin</div>
+            </div>
+            <a href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" class="sh__link">Tout explorer →</a>
         </div>
-    </div>
-</section>
-<?php endif; ?>
 
-<!-- ═══════ 3. BEST-SELLERS ═══════ -->
-<?php if ( $best_query->have_posts() ) : ?>
-<section class="section reveal">
-    <div class="section-header" style="text-align:center">
-        <div class="section-eyebrow">Nos coups de cœur</div>
-        <h2 class="section-title">Sélection du <em>mois</em></h2>
-    </div>
-    <div class="product-grid" id="bestSellers">
-        <?php while ( $best_query->have_posts() ) : $best_query->the_post();
-            echo jimee_render_product_card( get_the_ID() );
-        endwhile; wp_reset_postdata(); ?>
-    </div>
-</section>
-<?php endif; ?>
-
-<!-- ═══════ 4. PROMO BANNER ═══════ -->
-<?php if ( $has_sale ) :
-    $promo = jimee_get_promo_banner();
-?>
-<div class="section reveal" style="padding-top:0">
-    <div class="promo-banner">
-        <div class="promo-eyebrow"><?php echo esc_html( $promo['eyebrow'] ?? '' ); ?></div>
-        <h2 class="promo-title-hp"><?php echo wp_kses( $promo['title'] ?? '', [ 'em' => [] ] ); ?></h2>
-        <p class="promo-desc-hp"><?php echo esc_html( $promo['desc'] ?? '' ); ?></p>
-        <a href="<?php echo esc_url( home_url( $promo['link'] ?? '/le-bon-plan-jimee/' ) ); ?>" class="promo-cta-hp"><?php echo esc_html( $promo['cta'] ?? 'Voir les offres' ); ?> <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
-</div>
-<?php endif; ?>
-
-<!-- ═══════ 5. NOUVEAUTES ═══════ -->
-<?php if ( $new_query->have_posts() ) : ?>
-<section class="section reveal">
-    <div class="section-header" style="text-align:center">
-        <div class="section-eyebrow" >Fraîchement arrivés</div>
-        <h2 class="section-title">Les <em>nouveautés</em></h2>
-    </div>
-    <div class="product-grid">
-        <?php while ( $new_query->have_posts() ) : $new_query->the_post();
-            echo jimee_render_product_card( get_the_ID() );
-        endwhile; wp_reset_postdata(); ?>
-    </div>
-</section>
-<?php endif; ?>
-
-<!-- ═══════ 6. DOUBLE BANNER ═══════ -->
-<?php
-$double_banners = jimee_get_double_banners();
-$double_gradients = [
-    'linear-gradient(160deg,rgba(245,230,211,.7),rgba(212,184,152,.8))',
-    'linear-gradient(160deg,rgba(232,216,232,.7),rgba(192,168,196,.8))',
-];
-?>
-<div class="double-banner reveal">
-    <?php foreach ( $double_banners as $di => $dcard ) :
-        $dimg_url = ! empty( $dcard['image'] ) ? wp_get_attachment_image_url( $dcard['image'], 'large' ) : '';
-        $gradient = $double_gradients[ $di ] ?? $double_gradients[0];
-        $bg_style = $dimg_url
-            ? $gradient . ',url(' . esc_url( $dimg_url ) . ') center/cover'
-            : $gradient;
-    ?>
-    <div class="double-card" style="background:<?php echo $bg_style; ?>">
-        <div class="double-card-eyebrow"><?php echo esc_html( $dcard['eyebrow'] ?? '' ); ?></div>
-        <h3 class="double-card-title"><?php echo wp_kses( $dcard['title'] ?? '', [ 'em' => [] ] ); ?></h3>
-        <a href="<?php echo esc_url( home_url( $dcard['link'] ?? '/' ) ); ?>" class="double-card-cta"><?php echo esc_html( $dcard['cta'] ?? 'Découvrir' ); ?></a>
-    </div>
-    <?php endforeach; ?>
-</div>
-
-<!-- ═══════ 7. MARQUES SLIDER ═══════ -->
-<?php if ( ! empty( $home_brands ) ) : ?>
-<section class="section reveal">
-    <div class="section-header" style="display:flex;align-items:flex-end;justify-content:space-between;text-align:left">
-        <div>
-            <div class="section-eyebrow" style="text-align:left">Nos partenaires</div>
-            <h2 class="section-title">Nos <em>marques</em></h2>
-        </div>
-        <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="section-link">Voir toutes les marques <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-    </div>
-    <div class="brands-slider">
-        <?php foreach ( $home_brands as $brand ) :
-            $logo_id = get_term_meta( $brand->term_id, 'pharma_logo_square', true );
-            $brand_img = $logo_id ? wp_get_attachment_image_url( $logo_id, 'thumbnail' ) : '';
-            $desc = $brand->description ? wp_trim_words( wp_strip_all_tags( $brand->description ), 12 ) : '';
-        ?>
-        <a href="<?php echo esc_url( get_term_link( $brand ) ); ?>" class="brand-card">
-            <div class="brand-card-img">
-                <?php if ( $brand_img ) : ?>
-                    <img src="<?php echo esc_url( $brand_img ); ?>" alt="<?php echo esc_attr( $brand->name ); ?>" loading="lazy">
-                <?php else : ?>
-                    <div class="brand-card-initials"><?php echo esc_html( $brand->name ); ?></div>
+        <div class="cats__grid">
+            <?php
+            $cat_classes = [ 'cat--wide', 'cat--tall', '', '', '', '' ];
+            foreach ( $home_cats as $i => $cat ) :
+                $photo   = $cat_photos[ $i ] ?? '';
+                $cls     = isset( $cat_classes[ $i ] ) ? $cat_classes[ $i ] : '';
+                $num_cls = 'cat--' . ( $i + 1 );
+                $delay   = $i > 0 ? ' reveal-delay-' . min( $i, 5 ) : '';
+            ?>
+            <a href="<?php echo esc_url( get_term_link( $cat ) ); ?>"
+               class="cat <?php echo esc_attr( $num_cls . ' ' . $cls ); ?> reveal<?php echo $delay; ?>">
+                <?php if ( $photo ) : ?>
+                <img src="<?php echo esc_url( $photo ); ?>"
+                     alt="<?php echo esc_attr( $cat->name ); ?>"
+                     class="cat__photo" loading="lazy">
                 <?php endif; ?>
-            </div>
-            <div class="brand-card-info">
-                <div class="brand-card-name"><?php echo esc_html( $brand->name ); ?></div>
-                <?php if ( $desc ) : ?><div class="brand-card-desc"><?php echo esc_html( $desc ); ?></div><?php endif; ?>
-                <span class="brand-card-link">Explorer <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-            </div>
-        </a>
-        <?php endforeach; ?>
+                <div class="cat__name"><?php echo esc_html( $cat->name ); ?></div>
+                <div class="cat__count"><?php echo $cat->count; ?> produits</div>
+            </a>
+            <?php endforeach; ?>
+        </div>
     </div>
 </section>
 <?php endif; ?>
 
-<!-- ═══════ 8. REASSURANCE ═══════ -->
-<section class="section reveal">
-    <div class="reassurance-grid">
-        <div class="reassurance-card">
-            <div class="reassurance-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+<!-- ═══════════════════════════════════════════════════════════
+     4. PRODUITS EN PROMOTION
+════════════════════════════════════════════════════════════ -->
+<?php if ( $promo_query->have_posts() ) : ?>
+<section class="products section--tinted">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Produits en <em>Promotions</em></div>
+                <div class="sh__sub">Les mieux notés par nos clients</div>
             </div>
-            <div class="reassurance-title">Livraison offerte</div>
-            <div class="reassurance-desc">Dès 10 000 DA d'achat partout en Algérie</div>
+            <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="sh__link">Voir tout →</a>
         </div>
-        <div class="reassurance-card">
-            <div class="reassurance-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="reassurance-title">Paiement sécurisé</div>
-            <div class="reassurance-desc">Transactions cryptées CIB / Dahabia</div>
+
+        <div class="prod-grid">
+            <?php
+            $delays = [ '', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3', 'reveal-delay-4', '', 'reveal-delay-1', 'reveal-delay-2' ];
+            $B = [ 'best' => ['tag'=>'Bestseller','tc'=>'tag--green'], 'new' => ['tag'=>'Nouveau','tc'=>'tag--green'], 'lim' => ['tag'=>'Stock limité','tc'=>'tag--red'] ];
+            $promo_badges = [ null, $B['best'], null, $B['new'], null, $B['lim'], null, $B['best'] ];
+            $di = 0;
+            while ( $promo_query->have_posts() ) :
+                $promo_query->the_post();
+                hp_pc( get_the_ID(), $delays[ $di ] ?? '', $promo_badges[ $di ] ?? null );
+                $di++;
+            endwhile;
+            wp_reset_postdata();
+            ?>
         </div>
-        <div class="reassurance-card">
-            <div class="reassurance-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════════════════
+     5. FLASH PROMO (avec countdown)
+════════════════════════════════════════════════════════════ -->
+<?php if ( $flash_query && $flash_query->have_posts() ) : ?>
+<div class="flash-wrap">
+    <div class="container">
+        <div class="flash reveal">
+            <div class="flash__left">
+                <div class="flash__badge">⚡ Flash Promo</div>
+                <div class="flash__title">Offres du jour<br>jusqu'à −50%</div>
+                <div class="flash__sub">Réductions limitées avant<br>épuisement du stock</div>
+                <div class="flash__timer">
+                    <div class="flash__unit">
+                        <span class="flash__num" id="flash-hours">00</span>
+                        <span class="flash__lbl">Heures</span>
+                    </div>
+                    <span class="flash__sep">:</span>
+                    <div class="flash__unit">
+                        <span class="flash__num" id="flash-mins">00</span>
+                        <span class="flash__lbl">Minutes</span>
+                    </div>
+                    <span class="flash__sep">:</span>
+                    <div class="flash__unit">
+                        <span class="flash__num" id="flash-secs">00</span>
+                        <span class="flash__lbl">Secondes</span>
+                    </div>
+                </div>
+                <a href="<?php echo esc_url( home_url( '/le-bon-plan-jimee/' ) ); ?>" class="flash__see-all">Voir toutes les promos →</a>
             </div>
-            <div class="reassurance-title">Authenticité garantie</div>
-            <div class="reassurance-desc">100% produits originaux certifiés</div>
+
+            <div class="flash__products">
+                <?php while ( $flash_query->have_posts() ) : $flash_query->the_post();
+                    $fp      = wc_get_product( get_the_ID() );
+                    if ( ! $fp ) continue;
+                    $fp_img  = get_the_post_thumbnail_url( get_the_ID(), 'woocommerce_thumbnail' ) ?: wc_placeholder_img_src();
+                    $fp_reg  = (float) $fp->get_regular_price();
+                    $fp_sale = (float) $fp->get_sale_price();
+                    $fp_pct  = $fp_reg > 0 ? round( ( 1 - $fp_sale / $fp_reg ) * 100 ) : 0;
+                    $fp_brand_terms = wp_get_post_terms( get_the_ID(), 'product_brand' );
+                    $fp_brand = ! empty( $fp_brand_terms ) ? strtoupper( $fp_brand_terms[0]->name ) : '';
+                    $fp_stock = rand( 15, 75 );
+                ?>
+                <a href="<?php echo esc_url( get_permalink() ); ?>" class="flash__prod">
+                    <?php if ( $fp_pct > 0 ) : ?>
+                    <span class="flash__prod-badge">−<?php echo $fp_pct; ?>%</span>
+                    <?php endif; ?>
+                    <div class="flash__prod-img">
+                        <img src="<?php echo esc_url( $fp_img ); ?>" alt="<?php echo esc_attr( get_the_title() ); ?>">
+                    </div>
+                    <?php if ( $fp_brand ) : ?>
+                    <div class="flash__prod-brand"><?php echo esc_html( $fp_brand ); ?></div>
+                    <?php endif; ?>
+                    <div class="flash__prod-name"><?php echo esc_html( wp_trim_words( get_the_title(), 6 ) ); ?></div>
+                    <div class="flash__prod-prices">
+                        <span class="flash__prod-price"><?php echo number_format( $fp_sale ?: $fp->get_price(), 0, ',', ' ' ); ?> DA</span>
+                        <?php if ( $fp_reg > 0 ) : ?>
+                        <span class="flash__prod-old"><?php echo number_format( $fp_reg, 0, ',', ' ' ); ?> DA</span>
+                        <?php endif; ?>
+                    </div>
+                    <div class="flash__prod-stock">
+                        <div class="flash__prod-stock-bar">
+                            <div class="flash__prod-stock-fill" style="width:<?php echo $fp_stock; ?>%"></div>
+                        </div>
+                        <span class="flash__prod-stock-lbl"><?php echo $fp_stock < 20 ? 'Stock critique' : $fp_stock . '% restants'; ?></span>
+                    </div>
+                </a>
+                <?php endwhile; wp_reset_postdata(); ?>
+            </div>
+
         </div>
-        <div class="reassurance-card">
-            <div class="reassurance-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+    </div>
+</div>
+<?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════════════════
+     6. PRODUITS POPULAIRES
+════════════════════════════════════════════════════════════ -->
+<?php if ( $popular_query->have_posts() ) : ?>
+<section class="products">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Produits <em>Populaires</em></div>
+                <div class="sh__sub">Les mieux notés par nos clients</div>
             </div>
-            <div class="reassurance-title">Échantillons offerts</div>
-            <div class="reassurance-desc">Des surprises dans chaque commande</div>
+            <a href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" class="sh__link">Voir tout →</a>
+        </div>
+
+        <div class="prod-grid">
+            <?php
+            $delays = [ '', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3', 'reveal-delay-4', '', 'reveal-delay-1', 'reveal-delay-2' ];
+            $B = [ 'best' => ['tag'=>'Bestseller','tc'=>'tag--green'], 'new' => ['tag'=>'Nouveau','tc'=>'tag--green'], 'lim' => ['tag'=>'Stock limité','tc'=>'tag--red'] ];
+            $popular_badges = [ $B['best'], null, $B['new'], null, $B['lim'], $B['best'], null, $B['new'] ];
+            $di = 0;
+            while ( $popular_query->have_posts() ) :
+                $popular_query->the_post();
+                hp_pc( get_the_ID(), $delays[ $di ] ?? '', $popular_badges[ $di ] ?? null );
+                $di++;
+            endwhile;
+            wp_reset_postdata();
+            ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════════════════
+     7. BANNIÈRE PROMO (split 50/50)
+════════════════════════════════════════════════════════════ -->
+<section class="pb-section">
+    <div class="container">
+        <div class="pb reveal">
+            <div class="pb__content">
+                <div class="pb__tag"><?php echo esc_html( $promo['eyebrow'] ?? 'Soins naturels & Bio' ); ?></div>
+                <h2 class="pb__title">
+                    <?php echo wp_kses( $promo['title'] ?? 'Des soins qui<br>révèlent votre<br>éclat naturel', [ 'br' => [], 'em' => [] ] ); ?>
+                </h2>
+                <p class="pb__desc">
+                    <?php echo esc_html( $promo['desc'] ?? 'Crèmes, sérums et soins formulés avec des actifs naturels pour nourrir, hydrater et protéger votre peau au quotidien.' ); ?>
+                </p>
+                <a href="<?php echo esc_url( home_url( $promo['link'] ?? '/le-bon-plan-jimee/' ) ); ?>" class="pb__cta">
+                    <?php echo esc_html( $promo['cta'] ?? 'Découvrir la sélection' ); ?> →
+                </a>
+            </div>
+            <div class="pb__media">
+                <img src="<?php echo esc_url( $promo_img_url ); ?>"
+                     alt="Soins visage naturels"
+                     class="pb__photo">
+            </div>
         </div>
     </div>
 </section>
 
-<!-- ═══════ 9. NEWSLETTER ═══════ -->
-<div class="newsletter-section reveal">
-    <div class="newsletter-card">
-        <h2 class="newsletter-title">Rejoignez la <em>communauté</em></h2>
-        <p class="newsletter-desc">Recevez en avant-première nos offres exclusives, conseils beauté et nouveautés.</p>
-        <form class="newsletter-form" id="newsletterForm">
-            <input type="email" placeholder="Votre adresse e-mail" required>
-            <button type="submit">S'inscrire</button>
+<!-- ═══════════════════════════════════════════════════════════
+     8. NOUVEAUTÉS
+════════════════════════════════════════════════════════════ -->
+<?php if ( $new_query->have_posts() ) : ?>
+<section class="products" style="padding-top:0">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Nos <em>Nouveautés</em></div>
+                <div class="sh__sub">Tout juste arrivé en stock</div>
+            </div>
+            <a href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" class="sh__link">Voir tout →</a>
+        </div>
+
+        <div class="prod-grid">
+            <?php
+            $delays = [ '', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3' ];
+            $B = [ 'best' => ['tag'=>'Bestseller','tc'=>'tag--green'], 'new' => ['tag'=>'Nouveau','tc'=>'tag--green'], 'lim' => ['tag'=>'Stock limité','tc'=>'tag--red'] ];
+            $new_badges = [ $B['new'], null, $B['best'], $B['lim'] ];
+            $di = 0;
+            while ( $new_query->have_posts() ) :
+                $new_query->the_post();
+                hp_pc( get_the_ID(), $delays[ $di ] ?? '', $new_badges[ $di ] ?? null );
+                $di++;
+            endwhile;
+            wp_reset_postdata();
+            ?>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<!-- ═══════════════════════════════════════════════════════════
+     9. MARQUES PARTENAIRES
+════════════════════════════════════════════════════════════ -->
+<?php if ( ! empty( $home_brands ) ) : ?>
+<div class="brands">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Nos <em>Marques</em> Partenaires</div>
+                <div class="sh__sub">+150 marques certifiées disponibles</div>
+            </div>
+            <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="sh__link">Toutes les marques →</a>
+        </div>
+
+        <div class="brands__row">
+            <?php foreach ( $home_brands as $brand ) :
+                $logo_id  = get_term_meta( $brand->term_id, 'pharma_logo_square', true );
+                $logo_url = $logo_id ? wp_get_attachment_image_url( $logo_id, 'thumbnail' ) : '';
+            ?>
+            <a href="<?php echo esc_url( get_term_link( $brand ) ); ?>" class="brand-card" title="<?php echo esc_attr( $brand->name ); ?>">
+                <?php if ( $logo_url ) : ?>
+                    <img src="<?php echo esc_url( $logo_url ); ?>" alt="<?php echo esc_attr( $brand->name ); ?>" loading="lazy">
+                <?php else : ?>
+                    <span style="font-size:11px;font-weight:700;color:#888;text-align:center;letter-spacing:0.5px"><?php echo esc_html( $brand->name ); ?></span>
+                <?php endif; ?>
+            </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
+
+<section class="trust">
+    <div class="container">
+        <div class="trust__inner">
+
+            <div class="trust__item reveal">
+                <div class="trust__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5a2 2 0 0 1-2 2h-1"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <div class="trust__title">Livraison rapide</div>
+                <div class="trust__sub">Recevez vos commandes en 48h partout en Algérie.</div>
+            </div>
+
+            <div class="trust__item reveal reveal-delay-1">
+                <div class="trust__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="trust__title">Paiement sécurisé</div>
+                <div class="trust__sub">CIB, Edahabia, virement ou paiement à la livraison.</div>
+            </div>
+
+            <div class="trust__item reveal reveal-delay-2">
+                <div class="trust__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+                </div>
+                <div class="trust__title">Produits Certifiés</div>
+                <div class="trust__sub">100% authentiques, issus des distributeurs officiels.</div>
+            </div>
+
+            <div class="trust__item reveal reveal-delay-3">
+                <div class="trust__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+                </div>
+                <div class="trust__title">Retour Facile</div>
+                <div class="trust__sub">7 jours pour changer d'avis, retour simple et gratuit.</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     10. NEWSLETTER
+════════════════════════════════════════════════════════════ -->
+<div class="container">
+    <div class="hp-newsletter reveal">
+        <div class="hp-newsletter__tag"><span class="tag tag--white">Newsletter</span></div>
+        <div class="hp-newsletter__title">Restez <em>informé</em> des meilleures offres</div>
+        <div class="hp-newsletter__sub">Recevez promotions exclusives et nouveautés directement dans votre boîte mail</div>
+        <form class="hp-newsletter__form" id="newsletterForm">
+            <input class="hp-newsletter__input" type="email" placeholder="Votre adresse email…" required>
+            <button type="submit" class="hp-newsletter__btn">S'abonner →</button>
         </form>
+        <div class="hp-newsletter__note">Pas de spam. Désinscription en 1 clic.</div>
     </div>
 </div>
 
@@ -312,41 +592,14 @@ $double_gradients = [
 echo wp_json_encode( [
     '@context'    => 'https://schema.org',
     '@type'       => 'CosmeticsStore',
-    'name'        => 'Jimee Cosmetics',
-    'url'         => 'https://jimeecosmetics.com',
-    'logo'        => content_url( '/uploads/logo-header-retina-600.png' ),
-    'image'       => content_url( '/uploads/logo-header-retina-600.png' ),
-    'description' => 'Boutique en ligne multi-marques de cosmétiques en Algérie. Soins visage, cheveux, corps, maquillage et plus.',
-    'telephone'   => '+213550922274',
-    'email'       => 'contact@jimeecosmetics.com',
-    'priceRange'  => '$$',
-    'currenciesAccepted' => 'DZD',
+    'name'        => get_bloginfo( 'name' ),
+    'url'         => home_url( '/' ),
+    'description' => 'Parapharmacie et cosmétiques en ligne. Produits 100% authentiques, livrés partout en Algérie.',
     'address'     => [
-        '@type'           => 'PostalAddress',
-        'streetAddress'   => '02, Rue Allaoua AEK "La Croix"',
-        'addressLocality' => 'Kouba',
-        'addressRegion'   => 'Alger',
-        'addressCountry'  => 'DZ',
+        '@type'          => 'PostalAddress',
+        'addressCountry' => 'DZ',
     ],
-    'geo' => [
-        '@type'     => 'GeoCoordinates',
-        'latitude'  => 36.7246,
-        'longitude' => 3.0522,
-    ],
-    'openingHoursSpecification' => [
-        [
-            '@type'     => 'OpeningHoursSpecification',
-            'dayOfWeek' => [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday' ],
-            'opens'     => '10:00',
-            'closes'    => '20:00',
-        ],
-    ],
-    'sameAs' => [
-        'https://www.instagram.com/jimeecosmeticsshop',
-        'https://www.tiktok.com/@jimeecosmetics',
-        'https://www.facebook.com/jimmycosmetics',
-    ],
-], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT );
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 ?>
 </script>
 

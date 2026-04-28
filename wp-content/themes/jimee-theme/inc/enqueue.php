@@ -9,11 +9,11 @@ add_action( 'wp_enqueue_scripts', 'jimee_enqueue_assets' );
 function jimee_enqueue_assets() {
     $v = JIMEE_VERSION;
 
-    // Google Fonts — Poppins
-    wp_enqueue_style( 'jimee-poppins', 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap', [], null );
+    // Google Fonts — Poppins + Roboto + Inter
+    wp_enqueue_style( 'jimee-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Roboto:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap', [], null );
 
     // Theme base
-    wp_enqueue_style( 'jimee-base', get_stylesheet_uri(), [ 'jimee-poppins' ], $v );
+    wp_enqueue_style( 'jimee-base', get_stylesheet_uri(), [ 'jimee-fonts' ], $v );
 
     // Shared components (header, footer, cards, buttons, pills, modals)
     wp_enqueue_style( 'jimee-components', JIMEE_URI . '/assets/css/components.css', [ 'jimee-base' ], $v );

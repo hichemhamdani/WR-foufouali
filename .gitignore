@@ -29,6 +29,7 @@ images_to_download.txt
 wp-content/uploads/
 wp-content/upgrade/
 wp-content/upgrade-temp-backup/
+html_version
 
 # Clé de chiffrement SiteGround (spécifique à l'hébergement)
 wp-content/sgs_encrypt_key.php
