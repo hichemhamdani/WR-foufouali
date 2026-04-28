@@ -2,7 +2,7 @@
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 <div class="mobile-menu" id="mobileMenu">
     <div class="mobile-menu-header">
-        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo"><img src="<?php echo esc_url( JIMEE_URI . '/assets/img/logo-jimee-cosmetics-noir.png' ); ?>" alt="Jimee Cosmetics" class="logo-img" width="58" height="24"></a>
+        <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="mobile-menu-logo">Foufou <em>Ali</em></a>
         <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -23,9 +23,15 @@
 
     <!-- Quick access — story bubbles -->
     <div class="mobile-quick-access">
-        <a href="<?php echo esc_url( get_term_link( 3229, 'product_cat' ) ); ?>" class="mobile-quick-bubble">
+        <?php
+        $coffrets_thumb_id = get_term_meta( 3229, 'thumbnail_id', true );
+        $coffrets_img = $coffrets_thumb_id
+            ? wp_get_attachment_image_url( $coffrets_thumb_id, 'medium' )
+            : esc_url( JIMEE_URI . '/assets/img/caudalie-premier-cru-collection-anti-age.jpg' );
+        ?>
+        <a href="<?php echo esc_url( get_term_link( 3229, 'product_cat' ) ); ?>" class="mobile-quick-bubble mobile-quick-bubble--bio">
             <div class="mobile-quick-ring">
-                <div class="mobile-quick-inner" style="background-image:url('<?php echo esc_url( JIMEE_URI . '/assets/img/caudalie-premier-cru-collection-anti-age.jpg' ); ?>')">
+                <div class="mobile-quick-inner" style="background-image:url('<?php echo esc_url( $coffrets_img ); ?>')">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
                 </div>
             </div>
@@ -138,7 +144,7 @@
         <div class="mobile-nav-item">
             <a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>" class="mobile-nav-link">
                 <div class="mobile-nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
                 </div>
                 <span class="mobile-nav-text">Marques</span>
             </a>
