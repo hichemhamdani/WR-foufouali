@@ -193,7 +193,7 @@ endif;
         <div class="hero__grid">
 
             <!-- Grande carte principale (rang 1, pleine largeur) -->
-            <div class="hero__main">
+            <div class="hero__main" style="--hero-bg: url('<?php echo esc_url( $hero_photo ); ?>')"><?php // phpcs:ignore ?>
                 <div class="hero__copy">
                     <?php if ( ! empty( $slide['eyebrow'] ) ) : ?>
                     <div class="hero__eyebrow"><?php echo esc_html( $slide['eyebrow'] ); ?></div>
@@ -214,7 +214,7 @@ endif;
                             ? esc_html( $slide['desc'] )
                             : 'Jusqu\'à 35% de remise sur une sélection de nos meilleures ventes soins visage et cosmétiques.'; ?>
                     </p>
-                    <p class="hero__legal">*Offre valable jusqu'au 30 juin 2026. <a href="<?php echo esc_url( home_url( '/cgv/' ) ); ?>">Voir conditions</a></p>
+                    <p class="hero__legal">*Offre valable jusqu'au 30 juin 2026.</p>
 
                     <div class="hero__actions">
                         <a href="<?php echo esc_url( home_url( ! empty( $slide['link'] ) ? $slide['link'] : '/boutique/' ) ); ?>" class="cta cta--solid">
