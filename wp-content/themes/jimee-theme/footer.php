@@ -115,8 +115,11 @@ if ( $_popup['enabled'] ) :
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
             <p class="popup-badge"><?php echo esc_html( $_popup['badge'] ); ?></p>
-            <h2 class="popup-title"><?php echo esc_html( $_popup['title'] ); ?><em><?php echo esc_html( $_popup['title_em'] ); ?></em></h2>
-            <p class="popup-desc"><?php echo esc_html( $_popup['desc'] ); ?> <strong class="popup-inline-code" id="popupCode"><?php echo esc_html( $_popup['code'] ); ?></strong></p>
+            <h2 class="popup-title"><?php echo esc_html( $_popup['title'] ); ?> <em><?php echo esc_html( $_popup['title_em'] ); ?></em></h2>
+            <p class="popup-desc"><?php echo esc_html( $_popup['desc'] ); ?></p>
+            <div class="popup-code-box">
+                <div class="popup-code" id="popupCode"><?php echo esc_html( $_popup['code'] ); ?></div>
+            </div>
             <button class="popup-cta" id="popupCopy"><?php echo esc_html( $_popup['cta_text'] ); ?></button>
             <p class="popup-note"><?php echo esc_html( $_popup['note'] ); ?></p>
         </div>
@@ -128,19 +131,20 @@ if ( $_popup['enabled'] ) :
 .popup-card{position:relative;overflow:hidden;border-radius:16px;max-width:600px;width:100%;display:flex;flex-direction:row;background:#fff;box-shadow:0 24px 64px rgba(0,0,0,.22);transform:translateY(24px) scale(.97);transition:transform .42s cubic-bezier(.16,1,.3,1)}
 .popup-overlay.active .popup-card{transform:translateY(0) scale(1)}
 .popup-img{flex:0 0 46%;background-size:cover;background-position:center}
-.popup-body{flex:1;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;gap:14px;position:relative}
+.popup-body{flex:1;padding:40px 28px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:12px;position:relative}
 .popup-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:#f5f4ee;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#666;transition:background .2s}
 .popup-close:hover{background:#e8e6e0}
 .popup-badge{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#064A2A;background:rgba(6,74,42,.08);padding:5px 14px;border-radius:99px;margin:0}
-.popup-title{font-size:38px;font-weight:800;line-height:1.05;margin:0;color:#111;letter-spacing:-1.5px}
-.popup-title em{font-style:italic;color:#064A2A;display:block}
-.popup-desc{font-size:13px;color:#6B7F74;line-height:1.65;margin:0}
-.popup-inline-code{color:#064A2A;font-weight:700;font-size:13px;background:rgba(6,74,42,.08);padding:2px 8px;border-radius:6px}
-.popup-cta{background:#064A2A;color:#fff;border:none;border-radius:99px;padding:13px 28px;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;transition:background .2s,transform .15s;align-self:flex-start;letter-spacing:.2px}
+.popup-title{font-size:28px;font-weight:800;line-height:1.1;margin:0;color:#111;letter-spacing:-1px}
+.popup-title em{font-style:italic;color:#064A2A}
+.popup-desc{font-size:13px;color:#6B7F74;line-height:1.6;margin:0}
+.popup-code-box{background:#f5f4ee;border:2px dashed #71ac1e;border-radius:12px;padding:12px 24px;width:100%;box-sizing:border-box}
+.popup-code{font-family:'Poppins',sans-serif;font-size:30px;font-weight:800;letter-spacing:5px;color:#064A2A}
+.popup-cta{background:#064A2A;color:#fff;border:none;border-radius:99px;padding:13px 0;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;transition:background .2s,transform .15s;width:100%;letter-spacing:.2px}
 .popup-cta:hover{background:#71ac1e;transform:translateY(-2px)}
 .popup-cta:active{transform:translateY(0)}
 .popup-note{font-size:11px;color:#6B7F74;margin:0;opacity:.7}
-@media(max-width:540px){.popup-img{display:none}.popup-body{padding:36px 24px}.popup-title{font-size:30px}}
+@media(max-width:540px){.popup-img{display:none}.popup-body{padding:32px 24px}.popup-title{font-size:24px}}
 </style>
 <script>
 (function(){
