@@ -5,7 +5,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'JIMEE_VERSION', '3.1.2' );
+define( 'JIMEE_VERSION', '3.1.4' );
 define( 'JIMEE_DIR', get_template_directory() );
 define( 'JIMEE_URI', get_template_directory_uri() );
 
@@ -22,3 +22,4 @@ require_once JIMEE_DIR . '/inc/admin-banners.php';
 require_once JIMEE_DIR . '/inc/admin-product.php';
 require_once JIMEE_DIR . '/inc/back-in-stock.php';
 require_once JIMEE_DIR . '/inc/coming-soon.php';
+require_once JIMEE_DIR . '/inc/taxonomy-meta.php';

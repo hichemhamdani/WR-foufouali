@@ -23,6 +23,18 @@ $page_title      = $args['page_title'] ?? ( $term ? $term->name : 'Boutique' );
 $parent_id   = $term ? ( $term->parent ?? 0 ) : 0;
 $parent_term = $parent_id ? get_term( $parent_id, $taxonomy ) : null;
 
+/* ── Hero image (current term → parent fallback) ── */
+$hero_img_url = '';
+if ( $taxonomy === 'product_cat' && $term ) {
+    $hero_img_id = (int) get_term_meta( $term_id, 'jimee_cat_image_id', true );
+    if ( ! $hero_img_id && $parent_id ) {
+        $hero_img_id = (int) get_term_meta( $parent_id, 'jimee_cat_image_id', true );
+    }
+    if ( $hero_img_id ) {
+        $hero_img_url = wp_get_attachment_image_url( $hero_img_id, 'large' ) ?: '';
+    }
+}
+
 /* ── Subcategory pills ─────────────────────────── */
 $subcategories = [];
 if ( $show_subcats && $term ) {
@@ -116,7 +128,8 @@ if ( is_wp_error( $filter_terms ) ) $filter_terms = [];
 <div class="jimee-archive" data-term="<?php echo esc_attr( $term_id ); ?>" data-taxonomy="<?php echo esc_attr( $taxonomy ?: '' ); ?>" data-total="<?php echo esc_attr( $total_products ); ?>"<?php if ( $is_shop ) echo ' data-shop="1"'; ?>>
 
     <!-- HERO BLOCK -->
-    <div class="hero-block">
+    <div class="hero-block<?php echo $hero_img_url ? ' hero-block--has-img' : ''; ?>">
+    <div class="hero-block__body">
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a>
             <span class="sep">&rsaquo;</span>
@@ -178,6 +191,14 @@ if ( is_wp_error( $filter_terms ) ) $filter_terms = [];
             </div>
         </div>
         <?php endif; ?>
+    </div><!-- /.hero-block__body -->
+
+    <?php if ( $hero_img_url ) : ?>
+    <div class="hero-block__img">
+        <img src="<?php echo esc_url( $hero_img_url ); ?>" alt="<?php echo esc_attr( $page_title ); ?>" loading="eager">
+    </div>
+    <?php endif; ?>
+
     </div>
 
     <!-- PROMO SECTION -->
