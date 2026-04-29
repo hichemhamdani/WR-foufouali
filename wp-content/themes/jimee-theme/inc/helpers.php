@@ -67,87 +67,68 @@ function jimee_brand_initials( $name ) {
  * Render a single product card.
  * Used in archives, search, wishlist, homepage grids.
  */
-function jimee_render_product_card( $product_id ) {
+function jimee_render_product_card( $product_id, $delay = '', $badge_override = null ) {
     $product = wc_get_product( $product_id );
     if ( ! $product ) return '';
 
     $brand_terms = wp_get_post_terms( $product_id, 'product_brand' );
     $brand       = ! empty( $brand_terms ) ? strtoupper( $brand_terms[0]->name ) : '';
+    $img_url     = get_the_post_thumbnail_url( $product_id, 'woocommerce_thumbnail' ) ?: wc_placeholder_img_src();
+    $in_stock    = $product->is_in_stock();
+    $on_sale     = $product->is_on_sale();
+    $featured    = $product->is_featured();
+    $is_new      = ( time() - get_post_time( 'U', false, $product_id ) ) < 30 * DAY_IN_SECONDS;
+    $price       = (float) $product->get_price();
+    $reg         = (float) $product->get_regular_price();
+    $sale_p      = (float) $product->get_sale_price();
+    $rating      = (float) $product->get_average_rating();
+    $reviews     = (int)   $product->get_review_count();
+    $url         = get_permalink( $product_id );
+    $title       = get_the_title( $product_id );
+    $stock_qty   = $product->managing_stock() ? (int) $product->get_stock_quantity() : null;
+    $low_stock   = $stock_qty !== null && $stock_qty > 0 && $stock_qty <= 5;
 
-    $img_url = get_the_post_thumbnail_url( $product_id, 'woocommerce_thumbnail' );
-    if ( ! $img_url ) $img_url = wc_placeholder_img_src( 'woocommerce_thumbnail' );
+    if ( $badge_override !== null ) {
+        $tag = $badge_override['tag'];
+        $tc  = $badge_override['tc'];
+    } elseif ( $on_sale && $reg > 0 ) {
+        $pct = round( ( 1 - $sale_p / $reg ) * 100 );
+        $tag = "−{$pct}%"; $tc = 'tag--orange';
+    } elseif ( $low_stock ) { $tag = 'Stock limité'; $tc = 'tag--red'; }
+    elseif ( $featured )    { $tag = 'Bestseller';   $tc = 'tag--green'; }
+    elseif ( $is_new )      { $tag = 'Nouveau';      $tc = 'tag--green'; }
+    else                    { $tag = '';              $tc = ''; }
 
-    // Build srcset/sizes for responsive images
-    $thumb_id   = get_post_thumbnail_id( $product_id );
-    $img_srcset = $thumb_id ? wp_get_attachment_image_srcset( $thumb_id, 'woocommerce_thumbnail' ) : '';
-    $img_sizes  = $thumb_id ? '(max-width: 767px) 50vw, (max-width: 1199px) 33vw, 25vw' : '';
+    $stars = '';
+    for ( $i = 0; $i < 5; $i++ ) $stars .= $i < round( $rating ) ? '★' : '☆';
 
-    $in_stock  = $product->is_in_stock();
-    $on_sale   = $product->is_on_sale();
-    $featured  = $product->is_featured();
-    $is_new    = ( time() - get_post_time( 'U', false, $product_id ) ) < 30 * DAY_IN_SECONDS;
+    $display_price = ( $on_sale && $sale_p > 0 )
+        ? number_format( $sale_p, 0, ',', ' ' )
+        : number_format( $price, 0, ',', ' ' );
 
-    // Tag priority: promo > best-seller > new
-    $tag = '';
-    $tag_class = '';
-    if ( $on_sale )      { $tag = 'Promo';       $tag_class = 'promo'; }
-    elseif ( $featured ) { $tag = 'Best-seller';  $tag_class = 'best'; }
-    elseif ( $is_new )   { $tag = 'Nouveau';      $tag_class = 'new'; }
+    $cls = 'pc' . ( ! $in_stock ? ' out-of-stock' : '' ) . ( $delay ? ' ' . esc_attr( $delay ) : '' );
 
-    $price    = (float) $product->get_price();
-    $reg      = (float) $product->get_regular_price();
-    $sale     = (float) $product->get_sale_price();
-    $rating   = (float) $product->get_average_rating();
-    $reviews  = (int)   $product->get_review_count();
-    $url      = get_permalink( $product_id );
-    $title    = get_the_title( $product_id );
+    $html  = '<div class="' . esc_attr( $cls ) . '">';
+    if ( $tag ) $html .= '<div class="pc__badges"><span class="tag ' . esc_attr( $tc ) . '">' . esc_html( $tag ) . '</span></div>';
+    $html .= '<button class="pc__wish wishlist-btn" data-product-id="' . esc_attr( $product_id ) . '" aria-label="Favoris">🤍</button>';
+    $html .= '<div class="pc__img-wrap">';
+    $html .= '<a href="' . esc_url( $url ) . '" class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></a>';
+    if ( $in_stock ) {
+        $html .= '<div class="pc__overlay"><button class="pc__add cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '">+ Ajouter au panier</button></div>';
+        $html .= '<button class="pc__cart-icon cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '" aria-label="Ajouter au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>';
+    } else {
+        $html .= '<div class="out-of-stock-badge">Rupture de stock</div>';
+    }
+    $html .= '</div>';
+    $html .= '<div class="pc__body">';
+    if ( $brand ) $html .= '<div class="pc__brand">' . esc_html( $brand ) . '</div>';
+    $html .= '<a href="' . esc_url( $url ) . '" class="pc__name">' . esc_html( $title ) . '</a>';
+    if ( $rating > 0 ) $html .= '<div class="pc__stars">' . $stars . ' <span>(' . $reviews . ')</span></div>';
+    $html .= '<div><span class="pc__price">' . $display_price . ' DA</span>';
+    if ( $on_sale && $reg > 0 ) $html .= '<span class="pc__old">' . number_format( $reg, 0, ',', ' ' ) . ' DA</span>';
+    $html .= '</div></div></div>';
 
-    $oos_class = $in_stock ? '' : ' out-of-stock';
-
-    ob_start();
-    ?>
-    <a href="<?php echo esc_url( $url ); ?>" class="product-card<?php echo $oos_class; ?>">
-        <div class="product-card-image">
-            <img src="<?php echo esc_url( $img_url ); ?>" alt="<?php echo esc_attr( $title ); ?>" loading="lazy" width="400" height="400"<?php if ( $img_srcset ) : ?> srcset="<?php echo esc_attr( $img_srcset ); ?>" sizes="<?php echo esc_attr( $img_sizes ); ?>"<?php endif; ?>>
-            <?php if ( $tag ) : ?>
-                <span class="product-tag <?php echo $tag_class; ?>"><?php echo $tag; ?></span>
-            <?php endif; ?>
-            <button class="wishlist-btn" data-product-id="<?php echo esc_attr( $product_id ); ?>" aria-label="Ajouter aux favoris">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            </button>
-            <?php if ( $in_stock ) : ?>
-                <button class="cart-btn" data-add-to-cart="<?php echo esc_attr( $product_id ); ?>" aria-label="Ajouter au panier">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-                    <span class="cart-btn-plus">+</span>
-                </button>
-            <?php else : ?>
-                <div class="out-of-stock-badge">Rupture de stock</div>
-            <?php endif; ?>
-        </div>
-        <div class="product-info">
-            <div class="product-brand"><?php echo esc_html( $brand ); ?></div>
-            <div class="product-name"><?php echo esc_html( $title ); ?></div>
-            <?php if ( $rating > 0 ) : ?>
-            <div class="product-rating">
-                <span class="stars"><?php echo jimee_render_stars( $rating ); ?></span>
-                <span class="rating-count">(<?php echo $reviews; ?>)</span>
-            </div>
-            <?php endif; ?>
-            <div class="product-price">
-                <?php if ( $on_sale && $sale > 0 ) : ?>
-                    <span class="price-current"><?php echo number_format( $sale, 0, ',', ' ' ); ?> DA</span>
-                    <span class="price-old"><?php echo number_format( $reg, 0, ',', ' ' ); ?> DA</span>
-                    <?php if ( $reg > 0 ) : ?>
-                        <span class="price-badge">-<?php echo round( ( 1 - $sale / $reg ) * 100 ); ?>%</span>
-                    <?php endif; ?>
-                <?php else : ?>
-                    <span class="price-current"><?php echo number_format( $price, 0, ',', ' ' ); ?> DA</span>
-                <?php endif; ?>
-            </div>
-        </div>
-    </a>
-    <?php
-    return ob_get_clean();
+    return $html;
 }
 
 /**

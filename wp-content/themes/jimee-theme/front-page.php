@@ -124,63 +124,10 @@ $promo_img_url = $promo_img_id
     ? wp_get_attachment_image_url( $promo_img_id, 'large' )
     : $img_base . 'homepage-pub-nobg.png';
 
-/* ── Helper: product card (.pc style) ───────────────── */
+/* ── Helper: product card — wrapper around global function ── */
 if ( ! function_exists( 'hp_pc' ) ) :
 function hp_pc( $product_id, $delay = '', $badge_override = null ) {
-    $product = wc_get_product( $product_id );
-    if ( ! $product ) return;
-
-    $brand_terms = wp_get_post_terms( $product_id, 'product_brand' );
-    $brand       = ! empty( $brand_terms ) ? strtoupper( $brand_terms[0]->name ) : '';
-    $img_url     = get_the_post_thumbnail_url( $product_id, 'woocommerce_thumbnail' ) ?: wc_placeholder_img_src();
-    $on_sale     = $product->is_on_sale();
-    $is_new      = ( time() - get_post_time( 'U', false, $product_id ) ) < 30 * DAY_IN_SECONDS;
-    $featured    = $product->is_featured();
-    $price       = (float) $product->get_price();
-    $reg         = (float) $product->get_regular_price();
-    $sale_p      = (float) $product->get_sale_price();
-    $rating      = (float) $product->get_average_rating();
-    $reviews     = (int)   $product->get_review_count();
-    $url         = get_permalink( $product_id );
-    $title       = get_the_title( $product_id );
-
-    $stock_qty   = $product->managing_stock() ? (int) $product->get_stock_quantity() : null;
-    $low_stock   = $stock_qty !== null && $stock_qty > 0 && $stock_qty <= 5;
-
-    if ( $badge_override !== null ) {
-        $tag = $badge_override['tag'];
-        $tc  = $badge_override['tc'];
-    } elseif ( $on_sale && $reg > 0 ) {
-        $pct = round( ( 1 - $sale_p / $reg ) * 100 );
-        $tag = "−{$pct}%"; $tc = 'tag--orange';
-    } elseif ( $low_stock )    { $tag = 'Stock limité'; $tc = 'tag--red'; }
-    elseif ( $featured )       { $tag = 'Bestseller';   $tc = 'tag--green'; }
-    elseif ( $is_new )         { $tag = 'Nouveau';      $tc = 'tag--green'; }
-    else                       { $tag = '';              $tc = ''; }
-
-    $stars = '';
-    for ( $i = 0; $i < 5; $i++ ) $stars .= $i < round( $rating ) ? '★' : '☆';
-
-    $display_price = ( $on_sale && $sale_p > 0 )
-        ? number_format( $sale_p, 0, ',', ' ' )
-        : number_format( $price, 0, ',', ' ' );
-
-    $cls = 'pc reveal' . ( $delay ? ' ' . esc_attr( $delay ) : '' );
-    echo '<div class="' . $cls . '">';
-    if ( $tag ) echo '<div class="pc__badges"><span class="tag ' . esc_attr( $tc ) . '">' . esc_html( $tag ) . '</span></div>';
-    echo '<button class="pc__wish wishlist-btn" data-product-id="' . esc_attr( $product_id ) . '" aria-label="Favoris">🤍</button>';
-    echo '<div class="pc__img-wrap">';
-    echo '<a href="' . esc_url( $url ) . '" class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></a>';
-    echo '<div class="pc__overlay"><button class="pc__add cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '">+ Ajouter au panier</button></div>';
-    echo '<button class="pc__cart-icon cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '" aria-label="Ajouter au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>';
-    echo '</div>';
-    echo '<div class="pc__body">';
-    if ( $brand ) echo '<div class="pc__brand">' . esc_html( $brand ) . '</div>';
-    echo '<a href="' . esc_url( $url ) . '" class="pc__name">' . esc_html( $title ) . '</a>';
-    if ( $rating > 0 ) echo '<div class="pc__stars">' . $stars . ' <span>(' . $reviews . ')</span></div>';
-    echo '<div><span class="pc__price">' . $display_price . ' DA</span>';
-    if ( $on_sale && $reg > 0 ) echo '<span class="pc__old">' . number_format( $reg, 0, ',', ' ' ) . ' DA</span>';
-    echo '</div></div></div>';
+    echo jimee_render_product_card( $product_id, $delay ? 'reveal ' . $delay : 'reveal', $badge_override );
 }
 endif;
 ?>

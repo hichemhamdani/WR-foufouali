@@ -307,7 +307,7 @@
 }
 
 /* Card entrance animation */
-.product-grid-wrapper .product-card {
+.product-grid-wrapper .pc {
     opacity: 0; transform: translateY(24px);
     animation: cardIn .5s ease forwards;
 }
