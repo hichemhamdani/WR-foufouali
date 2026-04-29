@@ -28,12 +28,9 @@
 }
 .hero-block__img img {
     width: 100%; height: 100%;
-    object-fit: cover; object-position: center;
+    object-fit: cover; object-position: center bottom;
     display: block;
-}
-.hero-block__img::before {
-    content: ''; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(to right, var(--g900) 0%, rgba(6,74,42,0.3) 35%, transparent 60%);
+    transform: scale(1.55) translateY(40%); transform-origin: center bottom;
 }
 .back-btn {
     display: inline-flex; align-items: center; gap: 4px;
