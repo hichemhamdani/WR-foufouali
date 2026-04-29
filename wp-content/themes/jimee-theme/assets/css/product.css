@@ -253,8 +253,8 @@
 .tab-btn.active { color: #064A2A; font-weight: 600; }
 .tab-btn.active::after { transform: scaleX(1); }
 .tab-panel { display: none; }
-.tab-panel.active { display: block; }
-.tab-content { font-size: 14px; line-height: 1.8; color: #555; font-weight: 300; max-width: 800px; }
+.tab-panel.active { display: block; max-width: 760px; margin: 0 auto; }
+.tab-content { font-size: 14px; line-height: 1.8; color: #555; font-weight: 300; }
 .tab-content p { margin-bottom: 14px; }
 .tab-content ul { padding-left: 20px; list-style: disc; margin-bottom: 14px; }
 .tab-content li { margin-bottom: 4px; }
@@ -532,7 +532,8 @@
 }
 .scroll-track::after { content: ''; flex-shrink: 0; width: 8px; }
 .scroll-track::-webkit-scrollbar { display: none; }
-.scroll-track .product-card {
+.scroll-track .product-card,
+.scroll-track .pc {
     flex-shrink: 0; width: 280px; scroll-snap-align: start;
 }
 .scroll-arrow {

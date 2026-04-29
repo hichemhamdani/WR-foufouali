@@ -480,7 +480,7 @@
     var cardObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
-                var cards = entry.target.querySelectorAll('.product-card');
+                var cards = entry.target.querySelectorAll('.product-card, .pc');
                 cards.forEach(function(card, i) {
                     setTimeout(function() {
                         card.classList.add('card-visible');
