@@ -153,8 +153,8 @@ function jimee_popup_settings_page(): void {
                     <div style="max-width:380px;border-radius:20px;overflow:hidden;position:relative;min-height:460px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(4,22,12,.6)">
                         <!-- bg image layer -->
                         <div id="prev-bg-layer" style="position:absolute;inset:0;background-image:url('<?php echo esc_url( $preview_bg ); ?>');background-size:cover;background-position:center"></div>
-                        <!-- dark green overlay -->
-                        <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,28,16,.58) 0%,rgba(3,18,10,.92) 100%)"></div>
+                        <!-- dark green overlay (same as newsletter section) -->
+                        <div style="position:absolute;inset:0;background:rgba(6,74,42,.88)"></div>
                         <!-- content -->
                         <div style="position:relative;z-index:2;padding:36px 28px;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px;flex:1">
                             <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;align-self:flex-end;margin-bottom:4px;font-size:12px">✕</div>

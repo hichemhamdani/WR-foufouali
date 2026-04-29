@@ -133,7 +133,7 @@ if ( $_popup['enabled'] ) :
 .popup-overlay.active .popup-card{transform:translateY(0) scale(1)}
 .popup-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.06);transition:transform .6s ease}
 .popup-overlay.active .popup-bg{transform:scale(1)}
-.popup-dark-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(4,28,16,.58) 0%,rgba(3,18,10,.92) 100%)}
+.popup-dark-overlay{position:absolute;inset:0;background:rgba(6,74,42,.88)}
 .popup-content{position:relative;z-index:2;padding:44px 32px 36px;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px}
 .popup-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.18);cursor:pointer;color:#fff;transition:background .2s}
 .popup-close:hover{background:rgba(255,255,255,.22)}
