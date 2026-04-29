@@ -225,14 +225,13 @@
             })
             .then(function(r) { return r.json(); })
             .then(function(data) {
-                var capsule = btn.closest('.cta-capsule');
                 if (data.error) {
                     if (mainSpan) mainSpan.textContent = 'Erreur';
                     setTimeout(function() { if (mainSpan) mainSpan.textContent = origText; }, 2500);
                     return;
                 }
                 if (mainSpan) mainSpan.textContent = 'Ajout\u00e9 !';
-                if (capsule) capsule.style.background = '#2D8E4E';
+                btn.style.background = '#2D8E4E';
 
                 // Apply WC fragments (side cart + counts)
                 if (data.fragments && typeof jimeeApplyFragments === 'function') {
@@ -249,12 +248,61 @@
 
                 setTimeout(function() {
                     if (mainSpan) mainSpan.textContent = origText;
-                    if (capsule) capsule.style.background = '';
+                    btn.style.background = '';
                 }, 2000);
             })
             .catch(function() {
                 if (mainSpan) mainSpan.textContent = 'Erreur connexion';
                 setTimeout(function() { if (mainSpan) mainSpan.textContent = origText; }, 2500);
+            });
+        });
+    }
+
+    /* ========== BUY NOW — add to cart then redirect to checkout ========== */
+    var buyNowBtn = document.getElementById('mainBuyNow');
+    if (buyNowBtn) {
+        buyNowBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            var productId = this.getAttribute('data-product-id');
+            var checkoutUrl = this.getAttribute('data-checkout');
+            if (!productId || !checkoutUrl) return;
+
+            var btn = this;
+            var buySpan = btn.querySelector('.cta-buy-main');
+            if (buySpan) buySpan.textContent = 'Redirection...';
+            btn.style.pointerEvents = 'none';
+
+            var params = { quantity: quantity };
+            if (btn.dataset.productType === 'variable' && mainAddBtn && mainAddBtn.dataset.variationId) {
+                params.product_id = mainAddBtn.dataset.variationId;
+            } else {
+                params.product_id = productId;
+            }
+            if (window.jimeeProduct && jimeeProduct.nonce) {
+                params._wpnonce = jimeeProduct.nonce;
+            }
+
+            fetch('/?wc-ajax=add_to_cart', {
+                method: 'POST',
+                body: new URLSearchParams(params),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                if (data.error) {
+                    if (buySpan) buySpan.textContent = 'Erreur';
+                    btn.style.pointerEvents = '';
+                    setTimeout(function() {
+                        if (buySpan) buySpan.textContent = 'Achat direct';
+                    }, 2500);
+                    return;
+                }
+                window.location.href = checkoutUrl;
+            })
+            .catch(function() {
+                if (buySpan) buySpan.textContent = 'Erreur connexion';
+                btn.style.pointerEvents = '';
+                setTimeout(function() { if (buySpan) buySpan.textContent = 'Achat direct'; }, 2500);
             });
         });
     }

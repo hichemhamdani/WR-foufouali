@@ -125,7 +125,14 @@ if ( ! empty( $brand_terms ) ) {
                 <a href="<?php echo esc_url( $brand_link ); ?>" class="pd-brand"><?php echo esc_html( strtoupper( $brand ) ); ?></a>
             <?php endif; ?>
 
-            <h1 class="pd-name"><?php the_title(); ?></h1>
+            <div class="pd-name-wrap">
+                <h1 class="pd-name"><?php the_title(); ?></h1>
+                <?php if ( $in_stock ) : ?>
+                    <span class="pd-instock-badge"><?php echo ( $stock_qty && $stock_qty <= 10 ) ? 'Stock limité' : 'En stock'; ?></span>
+                <?php else : ?>
+                    <span class="pd-outstock-badge">Rupture de stock</span>
+                <?php endif; ?>
+            </div>
 
             <?php if ( $rating > 0 ) : ?>
             <div class="pd-rating">
@@ -324,6 +331,9 @@ if ( ! empty( $brand_terms ) ) {
                     </div>
                     <div class="cta-atc" id="mainAddToCart" data-product-id="<?php echo esc_attr( $product_id ); ?>" data-product-type="<?php echo esc_attr( $product->get_type() ); ?>">
                         <span class="cta-atc-main">Ajouter au panier</span>
+                    </div>
+                    <div class="cta-buy" id="mainBuyNow" data-product-id="<?php echo esc_attr( $product_id ); ?>" data-product-type="<?php echo esc_attr( $product->get_type() ); ?>" data-checkout="<?php echo esc_url( wc_get_checkout_url() ); ?>">
+                        <span class="cta-buy-main">Achat direct</span>
                     </div>
                     <div class="cta-wish pd-wishlist-btn" data-product-id="<?php echo esc_attr( $product_id ); ?>">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
@@ -597,48 +607,6 @@ if ( ! empty( $related_ids ) ) :
 </div>
 <?php endif; ?>
 
-<!-- EXPLORER PAR CATÉGORIE -->
-<?php
-$cat_photos = [
-    'visage'      => 'masque-visage-routine-skincare.jpg',
-    'cheveux'     => 'soin-cheveux-routine-capillaire.jpg',
-    'solaire'     => 'protection-solaire-ete-piscine.jpg',
-    'corps'       => 'spa-hammam-detente-bien-etre.jpg',
-    'homme'       => 'soin-visage-homme-serum-huile.jpg',
-    'maquillage'  => 'peau-glowy-maquillage-naturel.jpg',
-    'hygiene'     => 'lavage-mains-mousse-savon-hygiene.jpg',
-    'k-beauty'    => 'tocobo-cotton-airy-sun-stick-spf50.jpg',
-    'accesoires'  => 'accessoires-beaute-outils-coiffure.webp',
-];
-$img_base = JIMEE_URI . '/assets/img/';
-$sp_cats = get_terms( array( 'taxonomy' => 'product_cat', 'parent' => 0, 'hide_empty' => true, 'exclude' => jimee_excluded_cats(), 'number' => 10 ) );
-if ( ! empty( $sp_cats ) && ! is_wp_error( $sp_cats ) ) : ?>
-<section class="cat-explore reveal">
-    <div class="section-header" style="padding:0 32px;text-align:center;margin-bottom:32px">
-        <div class="section-eyebrow">Explorer par cat&eacute;gorie</div>
-        <h2 class="section-title">Nos <em>cat&eacute;gories</em></h2>
-    </div>
-    <div class="categories-wrapper">
-        <div class="categories-track">
-            <?php for ( $loop = 0; $loop < 2; $loop++ ) :
-                foreach ( $sp_cats as $spc ) :
-                    $photo = isset( $cat_photos[ $spc->slug ] ) ? $img_base . $cat_photos[ $spc->slug ] : '';
-            ?>
-            <a href="<?php echo esc_url( get_term_link( $spc ) ); ?>" class="category-circle">
-                <div class="category-circle-img">
-                    <?php if ( $photo ) : ?>
-                        <img src="<?php echo esc_url( $photo ); ?>" alt="<?php echo esc_attr( $spc->name ); ?>" loading="lazy">
-                    <?php else : ?>
-                        <div style="width:100%;height:100%;background:var(--warm-bg);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#999"><?php echo esc_html( mb_substr( $spc->name, 0, 3 ) ); ?></div>
-                    <?php endif; ?>
-                </div>
-                <div class="category-circle-name"><?php echo esc_html( $spc->name ); ?></div>
-            </a>
-            <?php endforeach; endfor; ?>
-        </div>
-    </div>
-</section>
-<?php endif; ?>
 
 <!-- STICKY ADD TO CART BAR -->
 <?php if ( $in_stock ) : ?>
