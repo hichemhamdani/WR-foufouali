@@ -109,44 +109,38 @@ if ( $_popup['enabled'] ) :
 <!-- POPUP COUPON (first visit, on scroll) -->
 <div class="popup-overlay" id="popupOverlay">
     <div class="popup-card">
-        <div class="popup-bg" style="background-image:url('<?php echo esc_url( $bg_url ); ?>')"></div>
-        <div class="popup-dark-overlay"></div>
-        <div class="popup-content">
+        <div class="popup-img" style="background-image:url('<?php echo esc_url( $bg_url ); ?>')"></div>
+        <div class="popup-body">
             <button class="popup-close" id="popupClose" aria-label="Fermer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="14" height="14"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
             </button>
-            <div class="popup-badge"><?php echo esc_html( $_popup['badge'] ); ?></div>
-            <h2 class="popup-title"><?php echo esc_html( $_popup['title'] ); ?> <em><?php echo esc_html( $_popup['title_em'] ); ?></em></h2>
-            <p class="popup-desc"><?php echo esc_html( $_popup['desc'] ); ?></p>
-            <div class="popup-code-wrap">
-                <div class="popup-code" id="popupCode"><?php echo esc_html( $_popup['code'] ); ?></div>
-            </div>
-            <button class="popup-copy" id="popupCopy"><?php echo esc_html( $_popup['cta_text'] ); ?></button>
+            <p class="popup-badge"><?php echo esc_html( $_popup['badge'] ); ?></p>
+            <h2 class="popup-title"><?php echo esc_html( $_popup['title'] ); ?><em><?php echo esc_html( $_popup['title_em'] ); ?></em></h2>
+            <p class="popup-desc"><?php echo esc_html( $_popup['desc'] ); ?> <strong class="popup-inline-code" id="popupCode"><?php echo esc_html( $_popup['code'] ); ?></strong></p>
+            <button class="popup-cta" id="popupCopy"><?php echo esc_html( $_popup['cta_text'] ); ?></button>
             <p class="popup-note"><?php echo esc_html( $_popup['note'] ); ?></p>
         </div>
     </div>
 </div>
 <style>
-.popup-overlay{position:fixed;inset:0;background:rgba(4,22,12,.65);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .35s}
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity .3s}
 .popup-overlay.active{display:flex;opacity:1}
-.popup-card{position:relative;overflow:hidden;border-radius:22px;max-width:400px;width:100%;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(4,22,12,.6);transform:translateY(28px) scale(.97);transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.popup-card{position:relative;overflow:hidden;border-radius:16px;max-width:600px;width:100%;display:flex;flex-direction:row;background:#fff;box-shadow:0 24px 64px rgba(0,0,0,.22);transform:translateY(24px) scale(.97);transition:transform .42s cubic-bezier(.16,1,.3,1)}
 .popup-overlay.active .popup-card{transform:translateY(0) scale(1)}
-.popup-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.06);transition:transform .6s ease}
-.popup-overlay.active .popup-bg{transform:scale(1)}
-.popup-dark-overlay{position:absolute;inset:0;background:rgba(6,74,42,.88)}
-.popup-content{position:relative;z-index:2;padding:44px 32px 36px;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px}
-.popup-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.18);cursor:pointer;color:#fff;transition:background .2s}
-.popup-close:hover{background:rgba(255,255,255,.22)}
-.popup-badge{display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#71ac1e;background:rgba(113,172,30,.18);padding:5px 14px;border-radius:99px;margin-bottom:4px}
-.popup-title{font-size:30px;font-weight:300;line-height:1.2;margin:0;color:#fff}
-.popup-title em{font-weight:800;font-style:italic;display:block;color:#f5f4ee}
-.popup-desc{font-size:13px;color:rgba(245,244,238,.6);line-height:1.6;margin:0}
-.popup-code-wrap{width:100%;background:rgba(113,172,30,.1);border:1.5px dashed rgba(113,172,30,.55);border-radius:12px;padding:12px 20px;margin:6px 0}
-.popup-code{font-family:'Poppins',sans-serif;font-size:24px;font-weight:700;letter-spacing:4px;color:#f5f4ee}
-.popup-copy{background:#71ac1e;color:#fff;border:none;border-radius:99px;padding:14px 0;font-size:14px;font-weight:700;font-family:'Poppins',sans-serif;cursor:pointer;transition:background .2s,transform .15s;width:100%;letter-spacing:.3px}
-.popup-copy:hover{background:#064A2A;transform:translateY(-2px)}
-.popup-copy:active{transform:translateY(0)}
-.popup-note{font-size:11px;color:rgba(245,244,238,.38);margin:2px 0 0}
+.popup-img{flex:0 0 46%;background-size:cover;background-position:center}
+.popup-body{flex:1;padding:40px 32px;display:flex;flex-direction:column;justify-content:center;gap:14px;position:relative}
+.popup-close{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;background:#f5f4ee;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;color:#666;transition:background .2s}
+.popup-close:hover{background:#e8e6e0}
+.popup-badge{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#064A2A;background:rgba(6,74,42,.08);padding:5px 14px;border-radius:99px;margin:0}
+.popup-title{font-size:38px;font-weight:800;line-height:1.05;margin:0;color:#111;letter-spacing:-1.5px}
+.popup-title em{font-style:italic;color:#064A2A;display:block}
+.popup-desc{font-size:13px;color:#6B7F74;line-height:1.65;margin:0}
+.popup-inline-code{color:#064A2A;font-weight:700;font-size:13px;background:rgba(6,74,42,.08);padding:2px 8px;border-radius:6px}
+.popup-cta{background:#064A2A;color:#fff;border:none;border-radius:99px;padding:13px 28px;font-size:14px;font-weight:600;font-family:'Poppins',sans-serif;cursor:pointer;transition:background .2s,transform .15s;align-self:flex-start;letter-spacing:.2px}
+.popup-cta:hover{background:#71ac1e;transform:translateY(-2px)}
+.popup-cta:active{transform:translateY(0)}
+.popup-note{font-size:11px;color:#6B7F74;margin:0;opacity:.7}
+@media(max-width:540px){.popup-img{display:none}.popup-body{padding:36px 24px}.popup-title{font-size:30px}}
 </style>
 <script>
 (function(){
@@ -157,12 +151,13 @@ if ( $_popup['enabled'] ) :
     var scrollThreshold = <?php echo esc_js( $popup_scroll ); ?>;
     var cookieDays      = <?php echo esc_js( $popup_days ); ?>;
     var promoCode       = <?php echo wp_json_encode( $_popup['code'] ); ?>;
+    var ctaUrl          = <?php echo wp_json_encode( $_popup['cta_url'] ?? '' ); ?>;
     var ctaDefault      = <?php echo wp_json_encode( $_popup['cta_text'] ); ?>;
 
     function closePopup(){
         var o = document.getElementById('popupOverlay');
         o.classList.remove('active');
-        setTimeout(function(){ o.style.display='none'; },350);
+        setTimeout(function(){ o.style.display='none'; },300);
     }
     function showPopup(){
         if(shown) return;
@@ -183,15 +178,19 @@ if ( $_popup['enabled'] ) :
         if(e.target===this) closePopup();
     });
     document.getElementById('popupCopy').addEventListener('click',function(){
-        if(navigator.clipboard){
-            navigator.clipboard.writeText(promoCode);
+        if(ctaUrl){
+            window.location.href = ctaUrl;
         } else {
-            var ta=document.createElement('textarea');
-            ta.value=promoCode; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+            if(navigator.clipboard){
+                navigator.clipboard.writeText(promoCode);
+            } else {
+                var ta=document.createElement('textarea');
+                ta.value=promoCode; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+            }
+            this.textContent='Code copié !';
+            var btn=this;
+            setTimeout(function(){ btn.textContent=ctaDefault; },2000);
         }
-        this.textContent='Code copié !';
-        var btn=this;
-        setTimeout(function(){ btn.textContent=ctaDefault; },2000);
     });
 })();
 </script>

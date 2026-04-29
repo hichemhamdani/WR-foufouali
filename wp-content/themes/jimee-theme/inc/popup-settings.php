@@ -18,12 +18,13 @@ function jimee_popup_defaults(): array {
     return [
         'enabled'    => 1,
         'bg_img_id'  => 0,
-        'badge'      => 'Offre de bienvenue',
-        'title'      => '-15% sur votre',
-        'title_em'   => 'première commande',
-        'desc'       => 'Utilisez le code ci-dessous lors de votre passage en caisse pour profiter de la remise.',
+        'badge'      => 'Offre limitée',
+        'title'      => '-15%',
+        'title_em'   => 'sur votre commande',
+        'desc'       => 'Utilisez votre code promo à la caisse :',
         'code'       => 'FOUFOU15',
-        'cta_text'   => 'Copier le code',
+        'cta_text'   => 'Voir la boutique',
+        'cta_url'    => '',
         'note'       => 'Valable une seule fois, sur tout le site.',
         'scroll_pct' => 25,
         'cookie_days'=> 30,
@@ -41,6 +42,7 @@ function jimee_popup_sanitize( $raw ): array {
         'desc'        => sanitize_textarea_field( $raw['desc']   ?? $d['desc'] ),
         'code'        => strtoupper( sanitize_text_field( $raw['code'] ?? $d['code'] ) ),
         'cta_text'    => sanitize_text_field( $raw['cta_text']   ?? $d['cta_text'] ),
+        'cta_url'     => esc_url_raw( $raw['cta_url'] ?? $d['cta_url'] ),
         'note'        => sanitize_text_field( $raw['note']       ?? $d['note'] ),
         'scroll_pct'  => min( 100, max( 0, (int) ( $raw['scroll_pct']  ?? $d['scroll_pct'] ) ) ),
         'cookie_days' => min( 365, max( 1,  (int) ( $raw['cookie_days'] ?? $d['cookie_days'] ) ) ),
@@ -130,12 +132,13 @@ function jimee_popup_settings_page(): void {
                 <div style="background:#fff;border:1px solid #ddd;border-radius:8px;padding:20px 24px">
                     <h2 style="font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#555;margin:0 0 16px">Contenu</h2>
 
-                    <?php jimee_popup_field( 'badge', 'Sous-titre (texte au-dessus du titre)', $o['badge'], 'text', 'ex : Offre de bienvenue' ); ?>
-                    <?php jimee_popup_field( 'title', 'Titre (partie normale)', $o['title'], 'text', 'ex : -15% sur votre' ); ?>
-                    <?php jimee_popup_field( 'title_em', 'Titre (partie en italique gras)', $o['title_em'], 'text', 'ex : première commande' ); ?>
-                    <?php jimee_popup_field( 'desc', 'Description', $o['desc'], 'textarea' ); ?>
-                    <?php jimee_popup_field( 'code', 'Code promo', $o['code'], 'text', 'ex : FOUFOU15' ); ?>
-                    <?php jimee_popup_field( 'cta_text', 'Texte du bouton CTA', $o['cta_text'], 'text', 'ex : Copier le code' ); ?>
+                    <?php jimee_popup_field( 'badge', 'Sous-titre (petit texte au-dessus)', $o['badge'], 'text', 'ex : Offre limitée' ); ?>
+                    <?php jimee_popup_field( 'title', 'Titre (partie normale)', $o['title'], 'text', 'ex : -15%' ); ?>
+                    <?php jimee_popup_field( 'title_em', 'Titre (partie en italique)', $o['title_em'], 'text', 'ex : sur votre commande' ); ?>
+                    <?php jimee_popup_field( 'desc', 'Description (avant le code)', $o['desc'], 'textarea', 'ex : Utilisez votre code promo à la caisse :' ); ?>
+                    <?php jimee_popup_field( 'code', 'Code promo (affiché en gras après la description)', $o['code'], 'text', 'ex : FOUFOU15' ); ?>
+                    <?php jimee_popup_field( 'cta_text', 'Texte du bouton', $o['cta_text'], 'text', 'ex : Voir la boutique' ); ?>
+                    <?php jimee_popup_field( 'cta_url', 'Lien du bouton (vide = copie le code)', $o['cta_url'], 'url', 'ex : https://foufouali.dz/boutique/' ); ?>
                     <?php jimee_popup_field( 'note', 'Note (petit texte bas)', $o['note'], 'text', 'ex : Valable une seule fois, sur tout le site.' ); ?>
                 </div>
 
@@ -148,27 +151,25 @@ function jimee_popup_settings_page(): void {
                 </div>
 
                 <!-- Aperçu -->
-                <div style="background:#042010;border-radius:8px;padding:20px 24px">
-                    <h2 style="font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#71ac1e;margin:0 0 16px">Aperçu</h2>
-                    <div style="max-width:380px;border-radius:20px;overflow:hidden;position:relative;min-height:460px;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(4,22,12,.6)">
-                        <!-- bg image layer -->
-                        <div id="prev-bg-layer" style="position:absolute;inset:0;background-image:url('<?php echo esc_url( $preview_bg ); ?>');background-size:cover;background-position:center"></div>
-                        <!-- dark green overlay (same as newsletter section) -->
-                        <div style="position:absolute;inset:0;background:rgba(6,74,42,.88)"></div>
-                        <!-- content -->
-                        <div style="position:relative;z-index:2;padding:36px 28px;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center;gap:10px;flex:1">
-                            <div style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;align-self:flex-end;margin-bottom:4px;font-size:12px">✕</div>
-                            <div id="prev-badge" style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#71ac1e;background:rgba(113,172,30,.18);padding:5px 14px;border-radius:99px"><?php echo esc_html( $o['badge'] ); ?></div>
-                            <div style="font-size:26px;font-weight:300;line-height:1.2;color:#fff">
+                <div style="background:#f0eeea;border-radius:8px;padding:20px 24px">
+                    <h2 style="font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#555;margin:0 0 16px">Aperçu</h2>
+                    <div style="max-width:580px;border-radius:16px;overflow:hidden;display:flex;flex-direction:row;background:#fff;box-shadow:0 8px 32px rgba(0,0,0,.12)">
+                        <!-- colonne image -->
+                        <div id="prev-bg-layer" style="flex:0 0 46%;background-image:url('<?php echo esc_url( $preview_bg ); ?>');background-size:cover;background-position:center;min-height:300px"></div>
+                        <!-- colonne contenu -->
+                        <div style="flex:1;padding:32px 28px;display:flex;flex-direction:column;justify-content:center;gap:12px;position:relative">
+                            <div style="position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;background:#f0eeea;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888">✕</div>
+                            <div id="prev-badge" style="display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#064A2A;background:rgba(6,74,42,.08);padding:5px 14px;border-radius:99px"><?php echo esc_html( $o['badge'] ); ?></div>
+                            <div style="font-size:28px;font-weight:800;line-height:1.1;color:#111;letter-spacing:-1px">
                                 <span id="prev-title"><?php echo esc_html( $o['title'] ); ?></span>
-                                <em id="prev-title-em" style="font-weight:800;font-style:italic;display:block;color:#f5f4ee"> <?php echo esc_html( $o['title_em'] ); ?></em>
+                                <em id="prev-title-em" style="font-style:italic;color:#064A2A;display:block"> <?php echo esc_html( $o['title_em'] ); ?></em>
                             </div>
-                            <div id="prev-desc" style="font-size:12px;color:rgba(245,244,238,.6);line-height:1.5"><?php echo esc_html( $o['desc'] ); ?></div>
-                            <div style="width:100%;background:rgba(113,172,30,.1);border:1.5px dashed rgba(113,172,30,.55);border-radius:10px;padding:10px 16px;margin:4px 0;box-sizing:border-box">
-                                <div id="prev-code" style="font-size:20px;font-weight:700;letter-spacing:4px;color:#f5f4ee"><?php echo esc_html( $o['code'] ); ?></div>
+                            <div style="font-size:12px;color:#6B7F74;line-height:1.6">
+                                <span id="prev-desc"><?php echo esc_html( $o['desc'] ); ?></span>
+                                <strong id="prev-code" style="color:#064A2A;font-weight:700;background:rgba(6,74,42,.08);padding:2px 7px;border-radius:5px"> <?php echo esc_html( $o['code'] ); ?></strong>
                             </div>
-                            <div id="prev-cta" style="background:#71ac1e;color:#fff;border-radius:99px;padding:12px 0;font-size:13px;font-weight:700;width:100%;box-sizing:border-box;text-align:center"><?php echo esc_html( $o['cta_text'] ); ?></div>
-                            <div id="prev-note" style="font-size:10px;color:rgba(245,244,238,.38)"><?php echo esc_html( $o['note'] ); ?></div>
+                            <div id="prev-cta" style="display:inline-block;background:#064A2A;color:#fff;border-radius:99px;padding:11px 24px;font-size:13px;font-weight:600;align-self:flex-start"><?php echo esc_html( $o['cta_text'] ); ?></div>
+                            <div id="prev-note" style="font-size:10px;color:#6B7F74;opacity:.7"><?php echo esc_html( $o['note'] ); ?></div>
                         </div>
                     </div>
                 </div>
