@@ -239,11 +239,11 @@
 
 /* ========== TABS ========== */
 .tabs-section { padding: 0; max-width: 1440px; margin: 0 auto; overflow: hidden; }
-.tabs-nav { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 32px; }
+.tabs-nav { display: flex; justify-content: center; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
 .tab-btn {
-    padding: 16px 28px; font-size: 14px; font-weight: 500; color: #999;
+    padding: 20px 40px; font-size: 15px; font-weight: 500; color: #999;
     background: none; border: none; cursor: pointer; position: relative;
-    transition: var(--transition); white-space: nowrap; font-family: inherit;
+    transition: var(--transition); white-space: nowrap; font-family: inherit; letter-spacing: .2px;
 }
 .tab-btn::after {
     content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
@@ -749,7 +749,7 @@
     .tabs-section { padding: 0 16px !important; margin-top: 24px !important; }
     .tabs-nav { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
     .tabs-nav::-webkit-scrollbar { display: none; }
-    .tab-btn { padding: 14px 20px; font-size: 13px; white-space: nowrap; }
+    .tab-btn { padding: 16px 22px; font-size: 13px; white-space: nowrap; }
     .cta-capsule { gap: 8px; }
     .cta-qty-btn { width: 40px; height: 48px; }
     .cta-atc { padding: 14px 18px; }
