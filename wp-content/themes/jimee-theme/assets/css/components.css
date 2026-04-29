@@ -356,6 +356,8 @@
 
 /* Mobile quick-add icon */
 @media (max-width: 768px) {
+    .pc__overlay { display: none; }
+    .pc:hover { border-color: var(--border, #E8E6E0); box-shadow: none; transform: none; }
     .pc .pc__cart-icon {
         display: flex; position: absolute; bottom: 8px; right: 8px;
         width: 32px; height: 32px; border-radius: 50%;
