@@ -247,7 +247,7 @@
 }
 .cat {
     position: relative; overflow: hidden; cursor: pointer;
-    border-radius: 24px; border: 1.5px solid var(--hp-border);
+    border-radius: 24px; border: none;
     background: var(--hp-surface); transition: all 250ms var(--ease-out);
     display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end;
     padding: 24px; text-decoration: none;
@@ -260,7 +260,7 @@
     z-index: 1;
 }
 .cat:hover::before { opacity: 0.75; }
-.cat:hover { border-color: var(--g500); transform: translateY(-4px); box-shadow: 0 12px 36px rgba(8,160,90,0.15); }
+.cat:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
 .cat--wide { grid-column: span 2; }
 .cat--tall { grid-row: span 2; }
 .cat__photo {
