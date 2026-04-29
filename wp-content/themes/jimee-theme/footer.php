@@ -63,7 +63,7 @@
                 </ul>
             </div>
 
-            <div>
+            <div class="footer__col--service">
                 <div class="footer__col-title">Service client</div>
                 <ul class="footer__links">
                     <li><a href="<?php echo esc_url( home_url( '/suivi-commande/' ) ); ?>">Suivi de commande</a></li>

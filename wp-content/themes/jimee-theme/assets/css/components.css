@@ -936,7 +936,9 @@
 
 @media (max-width: 480px) {
     .header__main { grid-template-columns: 1fr auto; }
-    .footer__top { grid-template-columns: 1fr; gap: 20px; }
+    .footer__top { grid-template-columns: 1fr 1fr; gap: 20px; }
+    .footer__contact-phone { display: none; }
+    .footer__col--service { display: none; }
     .topbar { display: none; }
 }
 
