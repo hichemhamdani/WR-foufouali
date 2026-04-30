@@ -5,6 +5,7 @@
 /* ========== PRODUCT HERO WARM BG ZONE ========== */
 .product-hero-wrapper {
     background: var(--warm-bg); position: relative; padding-bottom: 24px;
+    margin-top: 24px;
 }
 .product-hero-wrapper::after {
     content: ''; position: absolute; bottom: -20px; left: 0; right: 0; height: 20px;

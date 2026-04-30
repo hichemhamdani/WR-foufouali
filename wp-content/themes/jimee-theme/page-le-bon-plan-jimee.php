@@ -32,11 +32,11 @@ if ( $has_promos ) {
         <nav class="breadcrumb" aria-label="Fil d'Ariane">
             <a href="<?php echo esc_url( home_url( '/' ) ); ?>">Accueil</a>
             <span class="sep">&rsaquo;</span>
-            <span class="current">Le Bon Plan Jimee</span>
+            <span class="current">Bons Plans</span>
         </nav>
         <div class="bon-plan-hero-content">
-            <span class="bon-plan-eyebrow">Offre spéciale</span>
-            <h1>Le Bon Plan <em>Jimee</em></h1>
+            <span class="bon-plan-eyebrow">Offres &amp; Promos</span>
+            <h1>Nos Bons <em>Plans</em></h1>
             <?php if ( $has_promos ) : ?>
                 <p class="bon-plan-desc">Nos meilleures offres du moment sur une sélection de produits. Profitez-en avant qu'il ne soit trop tard !</p>
                 <p class="bon-plan-count"><?php echo $total; ?> produit<?php echo $total > 1 ? 's' : ''; ?> en promotion</p>
