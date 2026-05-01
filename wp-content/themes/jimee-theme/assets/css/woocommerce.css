@@ -1210,11 +1210,11 @@ form.checkout h3 { font-size: 18px; font-weight: 600; margin: 0; padding: 0; bor
 .jimee-mini-nav-logo {
   font-family: 'Poppins', sans-serif;
   font-size: 22px; font-weight: 900;
-  color: var(--black); letter-spacing: 2px; text-transform: uppercase;
+  color: var(--g900); letter-spacing: -1px;
   text-decoration: none; line-height: 1;
   position: absolute; left: 50%; transform: translateX(-50%);
 }
-.jimee-mini-nav-logo em { font-style: normal; color: var(--g500); }
+.jimee-mini-nav-logo em { font-style: italic; color: var(--g500); }
 .jimee-mini-nav-secure {
   display: flex; align-items: center; gap: 6px;
   font-size: 12px; font-weight: 500; color: #999;

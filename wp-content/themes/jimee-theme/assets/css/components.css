@@ -857,11 +857,11 @@
 /* ── Text logo ── */
 .header__logo {
     font-family: 'Poppins', sans-serif; font-size: 28px; font-weight: 900;
-    color: var(--ink); letter-spacing: 2px; text-transform: uppercase;
+    color: var(--g900); letter-spacing: -1px;
     white-space: nowrap; text-decoration: none; line-height: 1;
     flex-shrink: 0;
 }
-.header__logo em { font-style: normal; color: var(--g500); }
+.header__logo em { font-style: italic; color: var(--g500); }
 
 /* ── Search bar (pill) + dropdown wrapper ── */
 .header__search {
@@ -969,10 +969,10 @@
     border-bottom: 1px solid #dddccc;
 }
 .footer__brand {
-    font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 800;
-    color: #0F1A14; margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.3px;
+    font-family: 'Poppins', sans-serif; font-size: 42px; font-weight: 900;
+    color: var(--g900); margin-bottom: 12px; letter-spacing: -1px;
 }
-.footer__brand em { font-style: normal; color: var(--g500); }
+.footer__brand em { font-style: italic; color: var(--g500); }
 .footer__desc { font-size: 13px; color: #6B7F74; line-height: 1.7; margin-bottom: 20px; max-width: 280px; }
 .footer__social { display: flex; gap: 14px; }
 .footer__soc {
@@ -1023,7 +1023,7 @@
 
 @media (max-width: 768px) {
     .header__main { grid-template-columns: 1fr auto; gap: 16px; padding: 12px 0; }
-    .header__logo { font-size: 20px; letter-spacing: 1px; }
+    .header__logo { font-size: 20px; letter-spacing: -1px; }
     .header__search { display: none; }
     .header__actions > a:first-child { display: none; }
     .header__action-group .header__action-label { display: none; }
