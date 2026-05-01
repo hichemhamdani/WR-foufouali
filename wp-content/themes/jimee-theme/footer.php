@@ -1,5 +1,20 @@
 </main><!-- #main-content -->
 
+<?php if ( function_exists('is_cart') && ( is_cart() || is_checkout() ) ) : ?>
+<!-- FOOTER MINIMAL (cart / checkout) -->
+<footer class="footer footer--minimal">
+    <div class="footer__minimal-inner">
+        <div class="footer__minimal-secure">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Paiement 100% sécurisé
+        </div>
+        <span class="footer__minimal-sep">·</span>
+        <span>&copy; <?php echo date('Y'); ?> Foufou Ali. Tous droits réservés.</span>
+        <span class="footer__minimal-sep">·</span>
+        <a href="<?php echo esc_url( home_url('/') ); ?>">Retour à la boutique</a>
+    </div>
+</footer>
+<?php else : ?>
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
@@ -96,6 +111,7 @@
         </div>
     </div>
 </footer>
+<?php endif; ?>
 
 <?php
 $_popup = jimee_popup_options();

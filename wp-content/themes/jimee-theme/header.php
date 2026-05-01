@@ -8,6 +8,20 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if ( function_exists('is_cart') && ( is_cart() || is_checkout() ) ) : ?>
+<!-- MINI NAV (checkout / panier — sans chrome) -->
+<nav class="jimee-mini-nav">
+    <a href="<?php echo esc_url( home_url('/') ); ?>" class="jimee-mini-nav-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        <span>Continuer mes achats</span>
+    </a>
+    <a href="<?php echo esc_url( home_url('/') ); ?>" class="jimee-mini-nav-logo">Foufou <em>Ali</em></a>
+    <div class="jimee-mini-nav-secure">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        <span>Paiement sécurisé</span>
+    </div>
+</nav>
+<?php else : ?>
 <!-- TOP BAR -->
 <div class="topbar">
     <span class="topbar__msg">
@@ -123,5 +137,6 @@
 <?php get_template_part( 'template-parts/mobile-menu' ); ?>
 <?php get_template_part( 'template-parts/side-cart' ); ?>
 <?php get_template_part( 'template-parts/search-overlay' ); ?>
+<?php endif; ?>
 
 <main id="main-content">
