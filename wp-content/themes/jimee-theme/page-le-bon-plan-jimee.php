@@ -35,7 +35,6 @@ if ( $has_promos ) {
             <span class="current">Bons Plans</span>
         </nav>
         <div class="bon-plan-hero-content">
-            <span class="bon-plan-eyebrow">Offres &amp; Promos</span>
             <h1>Nos Bons <em>Plans</em></h1>
             <?php if ( $has_promos ) : ?>
                 <p class="bon-plan-desc">Nos meilleures offres du moment sur une sélection de produits. Profitez-en avant qu'il ne soit trop tard !</p>
