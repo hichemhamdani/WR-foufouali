@@ -110,21 +110,21 @@ function jimee_render_product_card( $product_id, $delay = '', $badge_override = 
 
     $html  = '<div class="' . esc_attr( $cls ) . '">';
     if ( $tag ) $html .= '<div class="pc__badges"><span class="tag ' . esc_attr( $tc ) . '">' . esc_html( $tag ) . '</span></div>';
-    $html .= '<button class="pc__wish wishlist-btn" data-product-id="' . esc_attr( $product_id ) . '" aria-label="Favoris">🤍</button>';
-    $html .= '<div class="pc__img-wrap">';
-    $html .= '<a href="' . esc_url( $url ) . '" class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></a>';
+    $html .= '<button class="pc__wish wishlist-btn" data-product-id="' . esc_attr( $product_id ) . '" aria-label="Favoris"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>';
+    $html .= '<a href="' . esc_url( $url ) . '" class="pc__img-wrap">';
+    $html .= '<div class="pc__img-inner"><img src="' . esc_url( $img_url ) . '" alt="' . esc_attr( $title ) . '" loading="lazy"></div>';
     if ( $in_stock ) {
         $html .= '<div class="pc__overlay"><button class="pc__add cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '">+ Ajouter au panier</button></div>';
         $html .= '<button class="pc__cart-icon cart-btn" data-add-to-cart="' . esc_attr( $product_id ) . '" aria-label="Ajouter au panier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>';
     } else {
         $html .= '<div class="out-of-stock-badge">Rupture de stock</div>';
     }
-    $html .= '</div>';
+    $html .= '</a>';
     $html .= '<div class="pc__body">';
     if ( $brand ) $html .= '<div class="pc__brand">' . esc_html( $brand ) . '</div>';
     $html .= '<a href="' . esc_url( $url ) . '" class="pc__name">' . esc_html( $title ) . '</a>';
     if ( $rating > 0 ) $html .= '<div class="pc__stars">' . $stars . ' <span>(' . $reviews . ')</span></div>';
-    $html .= '<div><span class="pc__price">' . $display_price . ' DA</span>';
+    $html .= '<div class="pc__price-row"><span class="pc__price">' . $display_price . ' DA</span>';
     if ( $on_sale && $reg > 0 ) $html .= '<span class="pc__old">' . number_format( $reg, 0, ',', ' ' ) . ' DA</span>';
     $html .= '</div></div></div>';
 

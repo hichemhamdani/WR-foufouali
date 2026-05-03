@@ -209,7 +209,7 @@
     .wishlist-btn { opacity: 1; }
 }
 .wishlist-btn svg { width: 18px; height: 18px; }
-.wishlist-btn.liked svg { fill: var(--bordeaux); stroke: var(--bordeaux); }
+.wishlist-btn.liked svg { fill: #e05c8c; stroke: #e05c8c; }
 
 /* Add to cart icon button (bottom-right of image, mirrors wishlist heart) */
 .cart-btn {
@@ -291,6 +291,7 @@
     background: #fff; border: 1.5px solid var(--hp-border, #dddccc);
     border-radius: 16px; overflow: hidden;
     cursor: pointer; position: relative;
+    display: flex; flex-direction: column;
     transition: border-color 250ms, box-shadow 250ms, transform 250ms;
 }
 .pc:hover { border-color: var(--g500); box-shadow: 0 8px 32px rgba(8,160,90,0.12); transform: translateY(-4px); }
@@ -309,8 +310,8 @@
 }
 .pc__wish:hover { background: var(--hp-surface, #f5f4ee); transform: scale(1.1); }
 
-.pc__img-wrap { height: 240px; overflow: hidden; background: #fff; position: relative; }
-.pc__img-inner { width: 100%; height: 100%; display: block; text-decoration: none; }
+.pc__img-wrap { height: 240px; overflow: hidden; background: #fff; position: relative; display: block; flex-shrink: 0; }
+.pc__img-inner { width: 100%; height: 100%; display: block; }
 .pc__img-inner img {
     width: 100%; height: 100%; object-fit: contain; padding: 14px;
     mix-blend-mode: multiply;
@@ -337,7 +338,8 @@
 
 .pc .pc__cart-icon { display: none; }
 
-.pc__body { padding: 16px; }
+.pc__body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+.pc__price-row { margin-top: auto; padding-top: 6px; }
 .pc__brand { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--g500); margin-bottom: 5px; }
 .pc__name {
     font-size: 14px; font-weight: 600; color: var(--black, #0F1A14); line-height: 1.4;

@@ -414,28 +414,29 @@
 /* ========== WISHLIST PAGE ========== */
 .wishlist-hero {
     max-width: 1440px; margin: 24px auto; padding: 28px 32px;
-    background: var(--black); border-radius: var(--radius-xl);
+    background: var(--g900); border-radius: var(--radius-xl);
     color: #fff; width: calc(100% - 64px);
 }
 .wishlist-eyebrow {
     font-size: 11px; font-weight: 600; letter-spacing: 3px;
-    text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+    text-transform: uppercase; color: var(--g500); margin-bottom: 8px;
 }
-.wishlist-hero h1 { font-size: clamp(24px, 3.5vw, 36px); font-weight: 300; }
-.wishlist-hero h1 em { font-style: italic; font-weight: 600; }
+.wishlist-hero h1 { font-size: clamp(24px, 3.5vw, 36px); font-weight: 800; letter-spacing: -1px; }
+.wishlist-hero h1 em { font-style: normal; font-weight: 800; color: var(--g500); }
 .wishlist-grid-wrapper {
     max-width: 1440px; margin: 0 auto; padding: 24px 32px 80px;
 }
 .wishlist-empty {
     text-align: center; padding: 80px 32px;
 }
-.wishlist-empty svg { width: 48px; height: 48px; color: #ccc; margin-bottom: 16px; }
+.wishlist-empty svg { width: 48px; height: 48px; color: var(--g500); margin-bottom: 16px; }
 .wishlist-empty h2 { font-size: 22px; font-weight: 600; margin-bottom: 8px; }
 .wishlist-empty p { font-size: 14px; color: #777; margin-bottom: 24px; }
 .wishlist-empty a {
     display: inline-block; padding: 12px 28px; border-radius: var(--radius-pill);
-    background: var(--black); color: #fff; font-size: 13px; font-weight: 500;
+    background: var(--g900); color: #fff; font-size: 13px; font-weight: 500; transition: var(--transition);
 }
+.wishlist-empty a:hover { background: var(--g500); }
 
 /* ========== 404 ========== */
 .page-404 { text-align: center; padding: 80px 32px; max-width: 600px; margin: 0 auto; }
