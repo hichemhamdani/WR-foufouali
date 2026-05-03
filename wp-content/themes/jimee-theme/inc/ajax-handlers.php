@@ -81,7 +81,7 @@ function jimee_load_products_ajax() {
     }
 
     // Contenance size ranges filter (e.g. ["0-8","41-75"])
-    $size_ranges_raw = sanitize_text_field( $_POST['size_ranges'] ?? '' );
+    $size_ranges_raw = sanitize_text_field( wp_unslash( $_POST['size_ranges'] ?? '' ) );
     if ( $size_ranges_raw ) {
         $size_ranges = json_decode( $size_ranges_raw, true );
         if ( ! empty( $size_ranges ) && is_array( $size_ranges ) ) {

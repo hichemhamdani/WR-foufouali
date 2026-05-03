@@ -111,6 +111,37 @@ if ( $filter_taxonomy === 'product_cat' ) {
 }
 $filter_terms = get_terms( $filter_args );
 if ( is_wp_error( $filter_terms ) ) $filter_terms = [];
+
+/* ── Dynamic counts within current category context ──────── */
+// Build the set of product IDs in the current context (category/brand)
+$ctx_ids = null;
+if ( $term_id ) {
+    $ctx_ids      = [];
+    $ctx_term_ids = [ $term_id ];
+    if ( $taxonomy === 'product_cat' ) {
+        $children = get_term_children( $term_id, $taxonomy );
+        if ( ! is_wp_error( $children ) ) {
+            $ctx_term_ids = array_merge( $ctx_term_ids, $children );
+        }
+    }
+    foreach ( $ctx_term_ids as $ctid ) {
+        $ids = get_objects_in_term( (int) $ctid, $taxonomy );
+        if ( ! is_wp_error( $ids ) ) {
+            $ctx_ids = array_merge( $ctx_ids, array_map( 'intval', $ids ) );
+        }
+    }
+    $ctx_ids = array_unique( $ctx_ids );
+}
+
+// Pre-compute cross-filter term counts in context
+$filter_term_counts = [];
+foreach ( $filter_terms as $ft ) {
+    $ids = get_objects_in_term( $ft->term_id, $filter_taxonomy );
+    $ids = is_wp_error( $ids ) ? [] : array_map( 'intval', $ids );
+    $filter_term_counts[ $ft->term_id ] = $ctx_ids !== null
+        ? count( array_intersect( $ids, $ctx_ids ) )
+        : count( $ids );
+}
 ?>
 
 <!-- Prefetch subcategory pages -->
@@ -297,11 +328,14 @@ if ( is_wp_error( $filter_terms ) ) $filter_terms = [];
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;color:#999;flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
             <div class="filter-drawer-list" id="filterTaxList" data-filter="cross">
-                <?php foreach ( $filter_terms as $ft ) : ?>
+                <?php foreach ( $filter_terms as $ft ) :
+                    $ft_ctx_count = $filter_term_counts[ $ft->term_id ] ?? 0;
+                    if ( $ft_ctx_count === 0 ) continue;
+                ?>
                 <label class="filter-checkbox" data-name="<?php echo esc_attr( strtolower( $ft->name ) ); ?>">
                     <input type="checkbox" value="<?php echo esc_attr( $ft->term_id ); ?>">
                     <span><?php echo esc_html( $ft->name ); ?></span>
-                    <span class="filter-count"><?php echo $ft->count; ?></span>
+                    <span class="filter-count"><?php echo $ft_ctx_count; ?></span>
                 </label>
                 <?php endforeach; ?>
             </div>
@@ -329,15 +363,29 @@ if ( is_wp_error( $filter_terms ) ) $filter_terms = [];
             'taxonomy'   => 'product_label',
             'hide_empty' => true,
         ]);
+        // Pre-compute label counts in context
+        $label_term_counts = [];
+        if ( ! is_wp_error( $label_filter_terms ) ) {
+            foreach ( $label_filter_terms as $lt ) {
+                $ids = get_objects_in_term( $lt->term_id, 'product_label' );
+                $ids = is_wp_error( $ids ) ? [] : array_map( 'intval', $ids );
+                $label_term_counts[ $lt->term_id ] = $ctx_ids !== null
+                    ? count( array_intersect( $ids, $ctx_ids ) )
+                    : count( $ids );
+            }
+        }
         if ( $taxonomy !== 'product_label' && ! is_wp_error( $label_filter_terms ) && ! empty( $label_filter_terms ) ) : ?>
         <div class="filter-drawer-section" id="filterSectionLabels">
             <h3 class="filter-drawer-section-title">Labels</h3>
             <div class="filter-drawer-list" data-filter="labels">
-                <?php foreach ( $label_filter_terms as $lt ) : ?>
+                <?php foreach ( $label_filter_terms as $lt ) :
+                    $lt_ctx_count = $label_term_counts[ $lt->term_id ] ?? 0;
+                    if ( $lt_ctx_count === 0 ) continue;
+                ?>
                 <label class="filter-checkbox" data-name="<?php echo esc_attr( strtolower( $lt->name ) ); ?>">
                     <input type="checkbox" value="<?php echo esc_attr( $lt->slug ); ?>">
                     <span><?php echo esc_html( $lt->name ); ?></span>
-                    <span class="filter-count"><?php echo $lt->count; ?></span>
+                    <span class="filter-count"><?php echo $lt_ctx_count; ?></span>
                 </label>
                 <?php endforeach; ?>
             </div>
