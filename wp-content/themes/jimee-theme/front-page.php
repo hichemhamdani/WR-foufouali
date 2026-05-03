@@ -48,8 +48,9 @@ if ( $has_sale ) shuffle( $on_sale_ids );
 $promo_query = new WP_Query([
     'post_type'      => 'product',
     'posts_per_page' => 8,
-    'post__in'       => $has_sale ? array_slice( $on_sale_ids, 0, 30 ) : [-1],
-    'orderby'        => 'post__in',
+    'post__in'       => $has_sale ? $on_sale_ids : [-1],
+    'orderby'        => 'date',
+    'order'          => 'DESC',
     'post_status'    => 'publish',
     'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
 ]);
