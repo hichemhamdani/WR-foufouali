@@ -285,7 +285,42 @@ endif;
         </div>
     </div>
 </section>
-<?php endif; ?>
+<?php else :
+    $arrivage_query = new WP_Query([
+        'post_type'      => 'product',
+        'posts_per_page' => 8,
+        'post_status'    => 'publish',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'meta_query'     => [[ 'key' => '_stock_status', 'value' => 'instock' ]],
+    ]);
+    if ( $arrivage_query->have_posts() ) :
+?>
+<section class="products section--tinted">
+    <div class="container">
+        <div class="sh reveal">
+            <div>
+                <div class="sh__title">Nouvel <em>arrivage</em></div>
+                <div class="sh__sub">Les derniers produits ajoutés à la boutique</div>
+            </div>
+            <a href="<?php echo esc_url( home_url( '/boutique/' ) ); ?>" class="sh__link">Voir tout →</a>
+        </div>
+
+        <div class="prod-grid">
+            <?php
+            $delays = [ '', 'reveal-delay-1', 'reveal-delay-2', 'reveal-delay-3', 'reveal-delay-4', '', 'reveal-delay-1', 'reveal-delay-2' ];
+            $di = 0;
+            while ( $arrivage_query->have_posts() ) :
+                $arrivage_query->the_post();
+                hp_pc( get_the_ID(), $delays[ $di ] ?? '', null );
+                $di++;
+            endwhile;
+            wp_reset_postdata();
+            ?>
+        </div>
+    </div>
+</section>
+<?php endif; endif; ?>
 
 <!-- ═══════════════════════════════════════════════════════════
      5. FLASH PROMO (avec countdown)
