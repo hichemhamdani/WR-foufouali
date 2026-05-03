@@ -89,7 +89,6 @@
                 <ul class="footer__links">
                     <li><a href="<?php echo esc_url( home_url( '/a-propos/' ) ); ?>">Qui sommes-nous</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/marques/' ) ); ?>">Nos marques</a></li>
-                    <li><a href="<?php echo esc_url( home_url( '/mentions-legales/' ) ); ?>">Mentions légales</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/conditions-de-vente/' ) ); ?>">CGV</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/politique-de-confidentialite/' ) ); ?>">Confidentialité</a></li>
                 </ul>

@@ -12,9 +12,9 @@ $is_legal = in_array( get_the_ID(), [ 3, 24 ], true )
 if ( $is_legal ) : while ( have_posts() ) : the_post(); ?>
 
     <div class="legal-hero">
-        <div class="legal-eyebrow">Jimee Cosmetics</div>
+        <div class="legal-eyebrow">Foufou Ali</div>
         <h1><?php the_title(); ?></h1>
-        <div class="legal-meta">Derniere mise a jour : avril 2026</div>
+        <div class="legal-meta">Dernière mise à jour : mai 2026</div>
     </div>
 
     <div class="legal-content">
