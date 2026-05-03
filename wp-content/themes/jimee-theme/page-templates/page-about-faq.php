@@ -14,7 +14,7 @@ $img = get_template_directory_uri() . '/assets/img/';
     <div class="about-hero-content">
         <span class="about-eyebrow">Notre histoire</span>
         <h1>Toutes choses Cosmé +,<br><em>tout en un seul endroit</em></h1>
-        <p class="about-hero-sub">Depuis Kouba au coeur d'Alger, Jimee Cosmetics rend la beauté accessible à toutes et tous en Algérie.</p>
+        <p class="about-hero-sub">Depuis El-Milia, Jijel, Foufou Ali rend la beauté accessible à toutes et tous en Algérie.</p>
     </div>
 </div>
 
@@ -23,11 +23,11 @@ $img = get_template_directory_uri() . '/assets/img/';
     <div class="about-story-text">
         <span class="about-eyebrow dark">Qui sommes-nous</span>
         <h2>Née d'une <em>passion</em></h2>
-        <p>Jimee Cosmetics, c'est avant tout l'histoire d'une passion pour la beauté. Depuis notre boutique au 02 Rue Alaoua Abd El Kader à Kouba, nous sélectionnons avec soin les meilleures marques internationales pour les rendre accessibles en Algérie.</p>
+        <p>Foufou Ali, c'est avant tout l'histoire d'une passion pour la beauté. Depuis notre boutique au Grand Boulevard à El-Milia, nous sélectionnons avec soin les meilleures marques internationales pour les rendre accessibles en Algérie.</p>
         <p>Notre équipe teste et valide chaque produit avant de le proposer. Du soin coréen K-Beauty aux marques premium occidentales, nous croyons que chaque personne mérite d'accéder aux meilleurs cosmétiques — sans compromis sur la qualité, à des prix justes.</p>
     </div>
     <div class="about-story-img">
-        <img src="<?php echo $img; ?>rare-beauty-collection-maquillage.jpg" alt="Collection beauté Jimee Cosmetics" loading="lazy">
+        <img src="<?php echo $img; ?>complement-category-homepage-highlight.png" alt="Collection beauté Foufou Ali" loading="lazy">
     </div>
 </section>
 
@@ -59,48 +59,51 @@ $img = get_template_directory_uri() . '/assets/img/';
     <div class="about-story-text">
         <span class="about-eyebrow dark">Notre mission</span>
         <h2>La beauté <em>sans frontières</em></h2>
-        <p>En Algérie, accéder aux dernières tendances beauté n'a pas toujours été simple. Jimee Cosmetics change la donne : nous sourçons directement auprès des distributeurs agréés pour garantir l'authenticité de chaque produit.</p>
+        <p>En Algérie, accéder aux dernières tendances beauté n'a pas toujours été simple. Foufou Ali change la donne : nous sourçons directement auprès des distributeurs agréés pour garantir l'authenticité de chaque produit.</p>
         <p>Livraison rapide via Yalidine sur tout le territoire national, paiement sécurisé par CIB et Dahabia, et un service client disponible et attentif du dimanche au samedi. La beauté, livrée chez vous.</p>
     </div>
     <div class="about-story-img">
-        <img src="<?php echo $img; ?>serum-goutte-pipette-soin-visage.jpg" alt="Sérum soin visage" loading="lazy">
+        <img src="<?php echo $img; ?>hero-body-care-category-homepage-highlight.png" alt="Soin corps" loading="lazy">
     </div>
 </section>
 
 <!-- VALUES -->
-<section class="about-values-section">
-    <div class="about-values-header">
-        <span class="about-eyebrow dark">Pourquoi Jimee</span>
-        <h2>Ce qui nous <em>distingue</em></h2>
-    </div>
-    <div class="about-values">
-        <div class="about-value">
-            <div class="about-value-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+<section class="trust">
+    <div class="container">
+        <div class="trust__inner">
+
+            <div class="trust__item">
+                <div class="trust__icon">
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/truck_819438.svg' ); ?>" alt="Livraison rapide" width="72" height="72">
+                </div>
+                <div class="trust__title">Livraison rapide</div>
+                <div class="trust__sub">Recevez vos commandes en 48h partout en Algérie.</div>
             </div>
-            <h3>100% Authentique</h3>
-            <p>Tous nos produits sont certifiés originaux, sourcés directement auprès des distributeurs agréés.</p>
-        </div>
-        <div class="about-value">
-            <div class="about-value-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+
+            <div class="trust__item">
+                <div class="trust__icon">
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/credit-card_657076.svg' ); ?>" alt="Paiement sécurisé" width="72" height="72">
+                </div>
+                <div class="trust__title">Paiement sécurisé</div>
+                <div class="trust__sub">CIB, Edahabia, virement ou paiement à la livraison.</div>
             </div>
-            <h3>Conseil expert</h3>
-            <p>Notre équipe vous accompagne pour trouver les produits adaptés à votre type de peau et vos besoins.</p>
-        </div>
-        <div class="about-value">
-            <div class="about-value-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+
+            <div class="trust__item">
+                <div class="trust__icon">
+                    <img src="<?php echo esc_url( JIMEE_URI . '/assets/img/icons/beauty_14535135.svg' ); ?>" alt="Produits certifiés" width="72" height="72">
+                </div>
+                <div class="trust__title">Produits Certifiés</div>
+                <div class="trust__sub">100% authentiques, issus des distributeurs officiels.</div>
             </div>
-            <h3>+7 000 produits</h3>
-            <p>Un catalogue riche de plus de 100 marques internationales, du soin quotidien au maquillage premium.</p>
-        </div>
-        <div class="about-value">
-            <div class="about-value-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-4"/></svg>
+
+            <div class="trust__item">
+                <div class="trust__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#0F1A14" stroke-width="1.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                </div>
+                <div class="trust__title">Retour Facile</div>
+                <div class="trust__sub">7 jours pour changer d'avis, retour simple et gratuit.</div>
             </div>
-            <h3>Livraison nationale</h3>
-            <p>Expédition via Yalidine sur les 58 wilayas. Livraison gratuite à partir de 10 000 DA.</p>
+
         </div>
     </div>
 </section>
@@ -131,14 +134,14 @@ $img = get_template_directory_uri() . '/assets/img/';
 <section class="about-boutique">
     <div class="about-boutique-inner">
         <div class="about-boutique-info">
-            <span class="about-eyebrow" style="color:var(--gold)">Notre boutique</span>
+            <span class="about-eyebrow" style="color:var(--g500)">Notre boutique</span>
             <h2>Venez nous <em>rencontrer</em></h2>
             <div class="about-boutique-details">
                 <div class="about-boutique-detail">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     <div>
                         <strong>Adresse</strong>
-                        <p>02 Rue Alaoua Abd El Kader<br>La Croix, Kouba — Alger</p>
+                        <p>Grand Boulevard<br>El-Milia — Jijel</p>
                     </div>
                 </div>
                 <div class="about-boutique-detail">
@@ -215,7 +218,7 @@ $img = get_template_directory_uri() . '/assets/img/';
         </div>
         <div class="faq-accordion">
             <div class="faq-accordion-header">Puis-je modifier ou annuler ma commande ? <span class="faq-accordion-icon">+</span></div>
-            <div class="faq-accordion-body"><div class="faq-accordion-body-inner">Vous pouvez modifier ou annuler votre commande tant qu'elle n'a pas été expédiée. Contactez-nous rapidement par téléphone au 0557 02 28 28 ou par email à contact@jimeecosmetics.com.</div></div>
+            <div class="faq-accordion-body"><div class="faq-accordion-body-inner">Vous pouvez modifier ou annuler votre commande tant qu'elle n'a pas été expédiée. Contactez-nous rapidement par téléphone au (+213) 034 52 67 89 ou par email à contact@pharmacie-foufouali.com.</div></div>
         </div>
         <div class="faq-accordion">
             <div class="faq-accordion-header">Comment suivre ma commande ? <span class="faq-accordion-icon">+</span></div>
@@ -280,7 +283,7 @@ $img = get_template_directory_uri() . '/assets/img/';
         <h2 class="faq-section-title">Produits</h2>
         <div class="faq-accordion">
             <div class="faq-accordion-header">Vos produits sont-ils authentiques ? <span class="faq-accordion-icon">+</span></div>
-            <div class="faq-accordion-body"><div class="faq-accordion-body-inner">Oui, 100%. Tous nos produits sont sourcés directement auprès des distributeurs officiels et agréés. Nous garantissons l'authenticité de chaque produit vendu sur jimeecosmetics.com.</div></div>
+            <div class="faq-accordion-body"><div class="faq-accordion-body-inner">Oui, 100%. Tous nos produits sont sourcés directement auprès des distributeurs officiels et agréés. Nous garantissons l'authenticité de chaque produit vendu sur foufouali.com.</div></div>
         </div>
         <div class="faq-accordion">
             <div class="faq-accordion-header">Un produit est en rupture de stock, que faire ? <span class="faq-accordion-icon">+</span></div>

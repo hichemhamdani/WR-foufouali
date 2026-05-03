@@ -25,7 +25,7 @@ function jimee_enqueue_assets() {
     wp_enqueue_script( 'jimee-wishlist', JIMEE_URI . '/assets/js/wishlist.js', [], $v, true );
 
     // Homepage + pages that use homepage components (brands slider, etc.)
-    if ( is_front_page() || is_page( 'marques' ) ) {
+    if ( is_front_page() || is_page( 'marques' ) || is_page_template( 'page-templates/page-about-faq.php' ) ) {
         wp_enqueue_style( 'jimee-homepage', JIMEE_URI . '/assets/css/homepage.css', [ 'jimee-components' ], $v );
     }
     if ( is_front_page() ) {

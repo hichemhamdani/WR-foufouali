@@ -21,28 +21,28 @@ get_header();
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
         <h3>Adresse</h3>
-        <p>02, Rue Allaoua AEK "La Croix", Kouba, Alger</p>
+        <p>Grand Boulevard, El-Milia — Jijel</p>
     </div>
     <div class="contact-card">
         <div class="contact-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         </div>
         <h3>Téléphone</h3>
-        <p><a href="tel:+213550922274">0 550 922 274</a></p>
+        <p><a href="tel:+213034526789">(+213) 034 52 67 89</a></p>
     </div>
     <div class="contact-card">
         <div class="contact-card-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
         <h3>Email</h3>
-        <p><a href="mailto:contact@jimeecosmetics.com">contact@jimeecosmetics.com</a></p>
+        <p><a href="mailto:contact@pharmacie-foufouali.com">contact@pharmacie-foufouali.com</a></p>
     </div>
 </div>
 
 <!-- Contact form + info -->
 <div class="contact-section">
     <div>
-        <h2 style="font-size:22px;font-weight:300;margin-bottom:24px">Envoyez-nous un <em style="font-weight:600;font-style:italic">message</em></h2>
+        <h2 style="font-size:22px;font-weight:800;letter-spacing:-0.5px;margin-bottom:24px">Envoyez-nous un <em style="font-style:normal;color:var(--g500)">message</em></h2>
         <form class="contact-form" id="jimeeContactForm">
             <?php wp_nonce_field( 'jimee_contact', 'jimee_contact_nonce' ); ?>
             <div>
@@ -122,20 +122,20 @@ get_header();
             <h3>Horaires d'ouverture</h3>
             <table style="width:100%;font-size:14px;color:#555">
                 <tr><td style="padding:6px 0">Dimanche — Jeudi</td><td style="text-align:right;font-weight:500">10h — 20h</td></tr>
-                <tr><td style="padding:6px 0">Vendredi</td><td style="text-align:right;font-weight:500;color:var(--bordeaux)">Fermé</td></tr>
+                <tr><td style="padding:6px 0">Vendredi</td><td style="text-align:right;font-weight:500;color:#c0392b">Fermé</td></tr>
                 <tr><td style="padding:6px 0">Samedi</td><td style="text-align:right;font-weight:500">10h — 20h</td></tr>
             </table>
         </div>
         <div class="contact-info-card">
             <h3>Réseaux sociaux</h3>
             <div style="display:flex;gap:12px;margin-top:12px">
-                <a href="https://www.instagram.com/jimeecosmeticsshop" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--black);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
+                <a href="https://www.instagram.com/jimeecosmeticsshop" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--g900);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" style="width:18px;height:18px"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="white" stroke="none"/></svg>
                 </a>
-                <a href="https://www.tiktok.com/@jimeecosmetics" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--black);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
+                <a href="https://www.tiktok.com/@jimeecosmetics" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--g900);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
                     <svg viewBox="0 0 24 24" fill="white" style="width:18px;height:18px"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78 2.92 2.92 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.33 6.33 0 0 0 9.37 22a6.33 6.33 0 0 0 6.38-6.2V9.06a8.16 8.16 0 0 0 3.84.96V6.69z"/></svg>
                 </a>
-                <a href="https://www.facebook.com/jimmycosmetics" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--black);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
+                <a href="https://www.facebook.com/jimmycosmetics" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:50%;background:var(--g900);display:flex;align-items:center;justify-content:center;transition:var(--transition)">
                     <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" style="width:18px;height:18px"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                 </a>
             </div>

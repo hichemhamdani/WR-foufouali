@@ -40,12 +40,8 @@
             <!-- Colonne 2 : Contact -->
             <div>
                 <div class="footer__contact-label">Besoin d'aide ?</div>
-                <div class="footer__contact-phone">0560 00 00 00</div>
-                <div class="footer__contact-lines">
-                    <strong>Conseil :</strong> 0560 00 00 01<br>
-                    <strong>Administration :</strong> 0560 00 00 02
-                </div>
-                <div class="footer__contact-address">Alger, Algérie</div>
+                <div class="footer__contact-phone">(+213) 034 52 67 89</div>
+                <div class="footer__contact-address">Grand Boulevard, El-Milia — Jijel</div>
                 <div class="footer__contact-hours-title">Horaires</div>
                 <div class="footer__contact-hours">
                     Dim – Jeu : 08h – 20h<br>
@@ -81,7 +77,6 @@
             <div class="footer__col--service">
                 <div class="footer__col-title">Service client</div>
                 <ul class="footer__links">
-                    <li><a href="<?php echo esc_url( home_url( '/suivi-commande/' ) ); ?>">Suivi de commande</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/livraison/' ) ); ?>">Livraison &amp; délais</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/retours/' ) ); ?>">Retours</a></li>
                     <li><a href="<?php echo esc_url( home_url( '/a-propos/#faq' ) ); ?>">FAQ</a></li>
