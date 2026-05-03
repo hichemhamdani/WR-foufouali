@@ -25,14 +25,14 @@
                 <div class="footer__brand">Foufou <em>Ali</em></div>
                 <p class="footer__desc">Votre cosmétique de confiance. Produits 100% authentiques, livrés partout en Algérie.</p>
                 <div class="footer__social">
-                    <a href="https://www.facebook.com/foufoualicosmetics" target="_blank" rel="noopener" aria-label="Facebook" class="footer__soc">
+                    <a href="https://www.facebook.com/p/Pharmacie-Et-Preparatoire-FouFou-Ali-El-Milia-100063508722874/" target="_blank" rel="noopener" aria-label="Facebook" class="footer__soc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                     </a>
-                    <a href="https://www.instagram.com/foufouali" target="_blank" rel="noopener" aria-label="Instagram" class="footer__soc">
+                    <a href="https://www.instagram.com/ali.adem.5492216/" target="_blank" rel="noopener" aria-label="Instagram" class="footer__soc">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
                     </a>
-                    <a href="https://www.tiktok.com/@foufouali" target="_blank" rel="noopener" aria-label="TikTok" class="footer__soc">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78 2.92 2.92 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.33 6.33 0 0 0 9.37 22a6.33 6.33 0 0 0 6.38-6.2V9.06a8.16 8.16 0 0 0 3.84.96V6.69z"/></svg>
+                    <a href="https://dz.linkedin.com/in/ali-foufou-alg%C3%A9rie-3191a691" target="_blank" rel="noopener" aria-label="LinkedIn" class="footer__soc">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                     </a>
                 </div>
             </div>

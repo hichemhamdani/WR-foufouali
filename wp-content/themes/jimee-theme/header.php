@@ -66,7 +66,7 @@
 
             <!-- Right actions -->
             <div class="header__actions">
-                <a href="<?php echo esc_url( home_url( '/nos-adresses/' ) ); ?>" class="header__action-group" title="Nos adresses">
+                <a href="https://maps.app.goo.gl/JNNvrMVG29LbJNem7" target="_blank" rel="noopener" class="header__action-group" title="Nos adresses">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     <span class="header__action-label"><small>Trouver</small>Nos adresses</span>
                 </a>
