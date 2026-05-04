@@ -29,6 +29,9 @@
 
     function closeMobileMenu() {
         if (!mobileMenu || !menuOverlay) return;
+        mobileMenu.querySelectorAll('.mobile-submenu.open').forEach(function(s) { s.classList.remove('open'); });
+        mobileMenu.classList.remove('submenu-open');
+        mobileMenu.scrollTop = 0;
         mobileMenu.classList.remove('open');
         menuOverlay.classList.remove('open');
         document.documentElement.classList.remove('menu-open');
@@ -46,7 +49,10 @@
             e.preventDefault();
             e.stopPropagation();
             var sub = document.getElementById(openBtn.getAttribute('data-submenu'));
-            if (sub) sub.classList.add('open');
+            if (sub) {
+                sub.classList.add('open');
+                if (mobileMenu) mobileMenu.classList.add('submenu-open');
+            }
             return;
         }
         // Close submenu (back button)
@@ -55,7 +61,12 @@
             e.preventDefault();
             e.stopPropagation();
             var sub = document.getElementById(closeBtn.getAttribute('data-close'));
-            if (sub) sub.classList.remove('open');
+            if (sub) {
+                sub.classList.remove('open');
+                if (mobileMenu && !mobileMenu.querySelector('.mobile-submenu.open')) {
+                    mobileMenu.classList.remove('submenu-open');
+                }
+            }
             return;
         }
     });
