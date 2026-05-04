@@ -73,7 +73,7 @@
                 <div class="header__divider"></div>
                 <a href="<?php echo esc_url( function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : '#' ); ?>" class="header__action-group" title="Mon compte">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                    <span class="header__action-label"><small>Bonjour</small>Se connecter</span>
+                    <span class="header__action-label"><small>Bonjour</small><?php echo is_user_logged_in() ? esc_html( wp_get_current_user()->first_name ?: wp_get_current_user()->display_name ) : 'Se connecter'; ?></span>
                 </a>
                 <div class="header__divider"></div>
                 <a href="<?php echo esc_url( home_url( '/wishlist/' ) ); ?>" class="header__icon-only wishlist-header-btn" aria-label="Favoris">
