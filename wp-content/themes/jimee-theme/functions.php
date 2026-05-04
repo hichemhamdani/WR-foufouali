@@ -24,3 +24,4 @@ require_once JIMEE_DIR . '/inc/back-in-stock.php';
 require_once JIMEE_DIR . '/inc/coming-soon.php';
 require_once JIMEE_DIR . '/inc/taxonomy-meta.php';
 require_once JIMEE_DIR . '/inc/popup-settings.php';
+require_once JIMEE_DIR . '/inc/admin-site-settings.php';

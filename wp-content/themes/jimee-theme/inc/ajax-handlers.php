@@ -382,7 +382,7 @@ function jimee_contact_handler() {
     ];
     $subject_label = $subjects[ $subject ] ?? $subject;
 
-    $to           = get_option( 'admin_email', 'contact@jimeecosmetics.com' );
+    $to           = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
     $mail_subject = 'Nouveau message contact — ' . $subject_label;
     $date         = date_i18n( 'j F Y à H:i' );
     $logo_url     = get_template_directory_uri() . '/assets/img/logo-jimee-cosmetics-noir.png';

@@ -54,24 +54,7 @@ function jimee_popup_options(): array {
     return wp_parse_args( (array) get_option( 'jimee_popup', [] ), jimee_popup_defaults() );
 }
 
-/* ── Admin menu ───────────────────────────────────────── */
-add_action( 'admin_menu', function() {
-    add_menu_page(
-        'Popup Promo',
-        'Popup Promo',
-        'manage_options',
-        'jimee-popup',
-        'jimee_popup_settings_page',
-        'dashicons-megaphone',
-        59
-    );
-} );
-
-/* ── Enqueue media uploader on our page ───────────────── */
-add_action( 'admin_enqueue_scripts', function( $hook ) {
-    if ( $hook !== 'toplevel_page_jimee-popup' ) return;
-    wp_enqueue_media();
-} );
+/* ── Admin menu & media: handled by admin-site-settings.php ── */
 
 /* ── Settings page HTML ───────────────────────────────── */
 function jimee_popup_settings_page(): void {

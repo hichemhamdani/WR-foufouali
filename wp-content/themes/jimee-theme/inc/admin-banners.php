@@ -10,18 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
    REGISTER OPTIONS PAGE
    ============================================================ */
 
-add_action( 'admin_menu', 'jimee_banners_menu' );
-function jimee_banners_menu() {
-    add_menu_page(
-        'Bannières Homepage',
-        'Bannières',
-        'manage_woocommerce',
-        'jimee-banners',
-        'jimee_banners_page',
-        'dashicons-images-alt2',
-        58 // After WooCommerce
-    );
-}
+/* Admin menu handled by admin-site-settings.php */
 
 /* ============================================================
    REGISTER SETTINGS
@@ -401,12 +390,4 @@ function jimee_banners_page() {
     <?php
 }
 
-/* ============================================================
-   ENQUEUE WP MEDIA on our admin page
-   ============================================================ */
-
-add_action( 'admin_enqueue_scripts', 'jimee_banners_admin_scripts' );
-function jimee_banners_admin_scripts( $hook ) {
-    if ( $hook !== 'toplevel_page_jimee-banners' ) return;
-    wp_enqueue_media();
-}
+/* Media enqueue handled by admin-site-settings.php */

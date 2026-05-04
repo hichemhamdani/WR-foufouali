@@ -11,18 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
    ADMIN PAGE
    ============================================================ */
 
-add_action( 'admin_menu', 'jimee_cs_menu' );
-function jimee_cs_menu() {
-    add_menu_page(
-        'Coming Soon',
-        'Coming Soon',
-        'manage_options', // Admin + Technique only
-        'jimee-coming-soon',
-        'jimee_cs_page',
-        'dashicons-lock',
-        90
-    );
-}
+/* Admin menu handled by admin-site-settings.php */
 
 add_action( 'admin_init', 'jimee_cs_register' );
 function jimee_cs_register() {
