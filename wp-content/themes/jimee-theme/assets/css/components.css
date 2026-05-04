@@ -481,11 +481,11 @@
     padding: 16px 20px; border-bottom: 1px solid rgba(0,0,0,.07);
 }
 .mobile-menu-logo {
-    font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 800;
-    color: var(--g900); text-transform: uppercase; letter-spacing: -0.3px;
+    font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 900;
+    color: var(--g900); letter-spacing: -1px;
     text-decoration: none;
 }
-.mobile-menu-logo em { font-style: normal; color: var(--g500); }
+.mobile-menu-logo em { font-style: italic; color: var(--g500); }
 .mobile-menu-close {
     width: 40px; height: 40px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
