@@ -743,13 +743,15 @@ form.checkout h3 { font-size: 18px; font-weight: 600; margin: 0; padding: 0; bor
     display: flex; align-items: center; justify-content: space-between;
     width: 100%; padding: 16px 20px; background: none; border: none;
     font-family: inherit; font-size: 14px; cursor: pointer;
+    color: var(--black);
   }
   .jimee-review-toggle-label {
     display: flex; align-items: center; gap: 8px; font-weight: 600;
+    flex: 1; min-width: 0;
   }
-  .jimee-review-toggle-label svg { color: var(--black); }
-  .jimee-review-count { font-weight: 400; color: #999; }
-  .jimee-review-toggle-total { font-weight: 700; font-size: 16px; }
+  .jimee-review-toggle-label svg { color: var(--black); flex-shrink: 0; }
+  .jimee-review-count { font-weight: 400; color: #999; white-space: nowrap; }
+  .jimee-review-toggle-total { font-weight: 700; font-size: 16px; white-space: nowrap; flex-shrink: 0; margin-left: 8px; }
   .jimee-review-chevron { transition: transform .3s ease; flex-shrink: 0; }
   .jimee-review-toggle[aria-expanded="true"] .jimee-review-chevron { transform: rotate(180deg); }
   .jimee-review-content { display: none; padding: 0 20px 20px; }
@@ -1035,6 +1037,13 @@ form.checkout h3 { font-size: 18px; font-weight: 600; margin: 0; padding: 0; bor
     grid-template-columns: 1fr !important; gap: 20px; padding: 0 !important;
   }
   .woocommerce-cart .cart-collaterals { grid-column: 1; }
+
+  /* Prevent grid items from overflowing their 1fr column */
+  .woocommerce-cart .woocommerce-cart-form,
+  .woocommerce-cart .cart-collaterals { min-width: 0; }
+
+  /* Allow long totals labels to wrap on narrow screens */
+  .woocommerce-cart .cart_totals table th { white-space: normal; }
 
   /* Cart items — mobile grid */
   .jimee-cart-item {
