@@ -1088,10 +1088,28 @@ form.checkout h3 { font-size: 18px; font-weight: 600; margin: 0; padding: 0; bor
 }
 @media (max-width: 768px) {
   .woocommerce, .woocommerce-page .woocommerce { padding: 16px; }
+  /* Override higher-specificity desktop rule */
+  .woocommerce-account .woocommerce { padding: 16px !important; }
   .woocommerce-account .u-columns.col2-set { grid-template-columns: 1fr; gap: 24px; }
   .woocommerce-account .u-columns .u-column1,
-  .woocommerce-account .u-columns .u-column2 { padding: 28px 20px; }
-  .woocommerce-MyAccount-content { padding: 28px 20px; }
+  .woocommerce-account .u-columns .u-column2 { padding: 20px 16px; }
+  .woocommerce-MyAccount-content { padding: 20px 16px; }
+  /* Hero title — reduce side padding and recalculate width */
+  .woocommerce-account .container > h1,
+  .woocommerce-account .entry-title,
+  .woocommerce-account .page-title {
+    padding: 20px 16px; margin-bottom: 24px;
+    width: calc(100% - 32px);
+  }
+  /* Orders table — horizontal scroll instead of overflow */
+  .woocommerce-orders-table {
+    display: block; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  }
+  /* Stack form rows (edit account / edit address) */
+  .woocommerce-account .form-row-first,
+  .woocommerce-account .form-row-last {
+    float: none !important; width: 100% !important; margin-right: 0;
+  }
   /* Old checkout responsive — now in checkout section above */
 }
 
