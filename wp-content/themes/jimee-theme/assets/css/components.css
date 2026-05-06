@@ -339,7 +339,7 @@
 .pc .pc__cart-icon { display: none; }
 
 .pc__body { padding: 16px; display: flex; flex-direction: column; flex: 1; }
-.pc__price-row { margin-top: auto; padding-top: 6px; }
+.pc__price-row { margin-top: auto; padding-top: 6px; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 6px; }
 .pc__brand { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--g500); margin-bottom: 5px; }
 .pc__name {
     font-size: 14px; font-weight: 600; color: var(--black, #0F1A14); line-height: 1.4;
@@ -350,8 +350,8 @@
 .pc__name:hover { color: var(--g500); }
 .pc__stars { color: #FF9F1C; font-size: 12px; margin-bottom: 10px; }
 .pc__stars span { font-size: 11.5px; color: #999; margin-left: 4px; }
-.pc__price { font-size: 19px; font-weight: 700; color: var(--g500); }
-.pc__old { font-size: 13px; color: #999; text-decoration: line-through; margin-left: 7px; }
+.pc__price { font-size: 19px; font-weight: 700; color: var(--g500); white-space: nowrap; }
+.pc__old { font-size: 13px; color: #999; text-decoration: line-through; white-space: nowrap; }
 
 .pc.out-of-stock { opacity: .85; }
 .pc.out-of-stock .pc__img-inner img { filter: grayscale(.6); opacity: .5; }
