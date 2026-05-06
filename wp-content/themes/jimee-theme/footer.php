@@ -96,12 +96,12 @@
         </div>
 
         <div class="footer__bottom">
-            <div>&copy; <?php echo date( 'Y' ); ?> Foufou Ali &mdash; Tous droits réservés. Conçu par <a href="https://web-rocket.dz" target="_blank" rel="noopener">Web Rocket</a></div>
             <div class="footer__pay">
                 <div class="footer__pay-icon">CIB</div>
                 <div class="footer__pay-icon">Edahabia</div>
                 <div class="footer__pay-icon">Cash</div>
             </div>
+            <div>&copy; <?php echo date( 'Y' ); ?> Foufou Ali &mdash; Tous droits réservés. Conçu par <a href="https://web-rocket.dz" target="_blank" rel="noopener">Web Rocket</a></div>
         </div>
     </div>
 </footer>
