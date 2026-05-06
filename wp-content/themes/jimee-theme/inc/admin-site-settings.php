@@ -473,6 +473,14 @@ function jimee_site_tab_formulaire(): void {
                         <p style="margin:4px 0 0;font-size:12px;color:#888">Envoie un email à chaque soumission depuis la page Contact.</p>
                     </div>
                 </li>
+                <li style="display:flex;align-items:flex-start;gap:10px;padding:12px 0">
+                    <span style="width:8px;height:8px;border-radius:50%;background:#71ac1e;flex-shrink:0;margin-top:5px"></span>
+                    <div>
+                        <strong>Formulaire Newsletter</strong>
+                        <code style="font-size:11px;color:#888;margin-left:8px;background:#f5f5f5;padding:1px 5px;border-radius:3px">inc/woocommerce.php</code>
+                        <p style="margin:4px 0 0;font-size:12px;color:#888">Envoie un email à chaque nouvelle inscription depuis le bloc newsletter (page d'accueil).</p>
+                    </div>
+                </li>
             </ul>
         </div>
 

@@ -49,10 +49,10 @@ function jimee_newsletter_handler() {
     if ( ! is_email( $email ) ) {
         wp_send_json_error( 'Email invalide' );
     }
-    $to = get_option( 'admin_email', 'contact@jimeecosmetics.com' );
-    $subject = 'Nouvelle inscription newsletter — Jimee Cosmetics';
-    $body = "Nouvelle inscription newsletter :\n\nEmail : $email\nDate : " . date_i18n( 'j F Y à H:i' ) . "\n";
-    $headers = [ 'From: Jimee Cosmetics <contact@jimeecosmetics.com>' ];
+    $to      = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
+    $subject = 'Nouvelle inscription newsletter';
+    $body    = "Nouvelle inscription newsletter :\n\nEmail : $email\nDate : " . date_i18n( 'j F Y à H:i' ) . "\n";
+    $headers = [ 'Content-Type: text/plain; charset=UTF-8' ];
     wp_mail( $to, $subject, $body, $headers );
     wp_send_json_success( 'Inscrit' );
 }
