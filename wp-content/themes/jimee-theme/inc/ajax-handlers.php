@@ -383,9 +383,10 @@ function jimee_contact_handler() {
     $subject_label = $subjects[ $subject ] ?? $subject;
 
     $to           = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
+    $from_email   = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
+    $site_name    = get_bloginfo( 'name' );
     $mail_subject = 'Nouveau message contact — ' . $subject_label;
     $date         = date_i18n( 'j F Y à H:i' );
-    $logo_url     = get_template_directory_uri() . '/assets/img/logo-jimee-cosmetics-noir.png';
     $site_url     = home_url( '/' );
 
     $phone_row = '';
@@ -393,21 +394,21 @@ function jimee_contact_handler() {
         $phone_row = '<tr><td style="padding:12px 16px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:#999;width:120px;vertical-align:top">Téléphone</td><td style="padding:12px 16px;font-size:14px;color:#000">' . esc_html( $phone ) . '</td></tr>';
     }
 
-    $body = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#F8F6F3;font-family:Poppins,Helvetica,Arial,sans-serif">
+    $body = '<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#F8F6F3;font-family:Helvetica,Arial,sans-serif">
     <div style="max-width:560px;margin:0 auto;padding:32px 16px">
 
-        <!-- Logo -->
+        <!-- Logo texte -->
         <div style="text-align:center;margin-bottom:24px">
-            <a href="' . esc_url( $site_url ) . '"><img src="' . esc_url( $logo_url ) . '" alt="Jimee Cosmetics" style="height:36px;width:auto"></a>
+            <a href="' . esc_url( $site_url ) . '" style="font-size:22px;font-weight:800;color:#064A2A;text-decoration:none;letter-spacing:-0.5px">' . esc_html( $site_name ) . '</a>
         </div>
 
         <!-- Card -->
         <div style="background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.06)">
 
             <!-- Header -->
-            <div style="background:#000;padding:24px 28px">
-                <h1 style="margin:0;font-size:18px;font-weight:300;color:#fff;font-family:Poppins,Helvetica,Arial,sans-serif">Nouveau message <strong>contact</strong></h1>
-                <p style="margin:6px 0 0;font-size:12px;color:rgba(255,255,255,.5)">' . esc_html( $date ) . '</p>
+            <div style="background:#064A2A;padding:24px 28px">
+                <h1 style="margin:0;font-size:18px;font-weight:300;color:#fff;font-family:Helvetica,Arial,sans-serif">Nouveau message <strong>contact</strong></h1>
+                <p style="margin:6px 0 0;font-size:12px;color:rgba(255,255,255,.6)">' . esc_html( $date ) . '</p>
             </div>
 
             <!-- Infos -->
@@ -435,20 +436,20 @@ function jimee_contact_handler() {
 
             <!-- CTA -->
             <div style="padding:0 28px 28px;text-align:center">
-                <a href="mailto:' . esc_attr( $email ) . '" style="display:inline-block;padding:12px 32px;background:#000;color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;font-family:Poppins,Helvetica,Arial,sans-serif">Répondre à ' . esc_html( $name ) . '</a>
+                <a href="mailto:' . esc_attr( $email ) . '" style="display:inline-block;padding:12px 32px;background:#064A2A;color:#fff;border-radius:999px;font-size:13px;font-weight:600;text-decoration:none;font-family:Helvetica,Arial,sans-serif">Répondre à ' . esc_html( $name ) . '</a>
             </div>
         </div>
 
         <!-- Footer -->
         <div style="text-align:center;padding:24px 0;font-size:11px;color:#999">
-            Jimee Cosmetics — Kouba, Alger
+            ' . esc_html( $site_name ) . ' — El-Milia, Jijel
         </div>
     </div>
     </body></html>';
 
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: Jimee Cosmetics <contact@jimeecosmetics.com>',
+        'From: ' . $site_name . ' <' . $from_email . '>',
         'Reply-To: ' . $name . ' <' . $email . '>',
     ];
 
