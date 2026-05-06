@@ -68,7 +68,7 @@ function jimee_login_styles() {
         font-weight: 600 !important;
         text-transform: uppercase !important;
         letter-spacing: .8px !important;
-        color: #000 !important;
+        color: #064A2A !important;
         margin-bottom: 6px !important;
         display: block !important;
     }
@@ -85,7 +85,7 @@ function jimee_login_styles() {
         border-radius: 12px !important;
         font-size: 14px !important;
         font-family: 'Poppins', sans-serif !important;
-        color: #000 !important;
+        color: #0F1A14 !important;
         background: #F8F6F3 !important;
         transition: all .3s cubic-bezier(.4,0,.2,1) !important;
         outline: none !important;
@@ -97,9 +97,9 @@ function jimee_login_styles() {
     #registerform input[type="text"]:focus,
     #registerform input[type="email"]:focus,
     #lostpasswordform input[type="text"]:focus {
-        border-color: #000 !important;
+        border-color: #064A2A !important;
         background: #fff !important;
-        box-shadow: 0 0 0 3px rgba(0,0,0,.06) !important;
+        box-shadow: 0 0 0 3px rgba(6,74,42,.08) !important;
     }
 
     /* ── Password reveal button ── */
@@ -114,7 +114,7 @@ function jimee_login_styles() {
         transform: translateY(-50%) !important;
         right: 12px !important;
     }
-    .wp-pwd .button.wp-hide-pw:hover { color: #000 !important; }
+    .wp-pwd .button.wp-hide-pw:hover { color: #064A2A !important; }
     .wp-pwd .button.wp-hide-pw:focus { box-shadow: none !important; outline: none !important; }
 
     /* ── Remember me ── */
@@ -138,7 +138,7 @@ function jimee_login_styles() {
         gap: 8px !important;
     }
     .forgetmenot input[type="checkbox"] {
-        accent-color: #000 !important;
+        accent-color: #064A2A !important;
         width: 16px !important;
         height: 16px !important;
         border-radius: 4px !important;
@@ -149,7 +149,7 @@ function jimee_login_styles() {
         display: block !important;
         width: 100% !important;
         padding: 14px 32px !important;
-        background: #000 !important;
+        background: #064A2A !important;
         color: #fff !important;
         border: none !important;
         border-radius: 999px !important;
@@ -165,9 +165,9 @@ function jimee_login_styles() {
         float: none !important;
     }
     #wp-submit:hover {
-        background: #333 !important;
+        background: #71ac1e !important;
         transform: translateY(-2px) !important;
-        box-shadow: 0 8px 40px rgba(0,0,0,.10) !important;
+        box-shadow: 0 8px 40px rgba(6,74,42,.15) !important;
     }
 
     /* ── Login actions row — stack vertically ── */
@@ -195,7 +195,7 @@ function jimee_login_styles() {
         transition: all .3s cubic-bezier(.4,0,.2,1) !important;
     }
     #login #nav a:hover, #login #backtoblog a:hover {
-        color: #000 !important;
+        color: #064A2A !important;
     }
 
     /* ── Separator in nav links ── */
@@ -218,10 +218,10 @@ function jimee_login_styles() {
         border-color: #8B0000 !important;
     }
     #login .message {
-        border-color: #D4AF37 !important;
+        border-color: #71ac1e !important;
     }
     #login #login_error a, #login .message a {
-        color: #000 !important;
+        color: #064A2A !important;
         font-weight: 500 !important;
     }
 
@@ -235,7 +235,7 @@ function jimee_login_styles() {
         font-size: 12px !important;
         color: #bbb !important;
     }
-    .login .privacy-policy-page-link a:hover { color: #000 !important; }
+    .login .privacy-policy-page-link a:hover { color: #064A2A !important; }
 
     /* ── Language switcher — hidden ── */
     .language-switcher { display: none !important; }
