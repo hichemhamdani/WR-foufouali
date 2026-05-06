@@ -448,6 +448,7 @@ function jimee_contact_handler() {
 
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
+        'From: ' . $site_name . ' <' . get_option( 'admin_email' ) . '>',
         'Reply-To: ' . $name . ' <' . $email . '>',
     ];
 

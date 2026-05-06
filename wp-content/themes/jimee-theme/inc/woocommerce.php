@@ -49,10 +49,14 @@ function jimee_newsletter_handler() {
     if ( ! is_email( $email ) ) {
         wp_send_json_error( 'Email invalide' );
     }
-    $to      = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
-    $subject = 'Nouvelle inscription newsletter';
-    $body    = "Nouvelle inscription newsletter :\n\nEmail : $email\nDate : " . date_i18n( 'j F Y à H:i' ) . "\n";
-    $headers = [ 'Content-Type: text/plain; charset=UTF-8' ];
+    $to        = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
+    $site_name = get_bloginfo( 'name' );
+    $subject   = 'Nouvelle inscription newsletter';
+    $body      = "Nouvelle inscription newsletter :\n\nEmail : $email\nDate : " . date_i18n( 'j F Y à H:i' ) . "\n";
+    $headers   = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'From: ' . $site_name . ' <' . get_option( 'admin_email' ) . '>',
+    ];
     wp_mail( $to, $subject, $body, $headers );
     wp_send_json_success( 'Inscrit' );
 }
