@@ -382,9 +382,8 @@ function jimee_contact_handler() {
     ];
     $subject_label = $subjects[ $subject ] ?? $subject;
 
-    $to           = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
-    $from_email   = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
-    $site_name    = get_bloginfo( 'name' );
+    $to        = get_option( 'jimee_contact_email' ) ?: get_option( 'admin_email' );
+    $site_name = get_bloginfo( 'name' );
     $mail_subject = 'Nouveau message contact — ' . $subject_label;
     $date         = date_i18n( 'j F Y à H:i' );
     $site_url     = home_url( '/' );
@@ -449,7 +448,6 @@ function jimee_contact_handler() {
 
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
-        'From: ' . $site_name . ' <' . $from_email . '>',
         'Reply-To: ' . $name . ' <' . $email . '>',
     ];
 
