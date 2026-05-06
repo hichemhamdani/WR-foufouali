@@ -1,6 +1,6 @@
 <?php
 /**
- * Custom WordPress login page — Jimee Cosmetics branding.
+ * Custom WordPress login page branding.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -10,9 +10,9 @@ add_filter( 'login_headerurl', function() {
     return home_url( '/' );
 });
 
-// Replace WP logo title
+// Replace WP logo title with site name
 add_filter( 'login_headertext', function() {
-    return 'Jimee Cosmetics';
+    return get_bloginfo( 'name' );
 });
 
 // Enqueue Google Fonts on login page
@@ -23,7 +23,6 @@ add_action( 'login_enqueue_scripts', function() {
 // Inject custom CSS
 add_action( 'login_enqueue_scripts', 'jimee_login_styles' );
 function jimee_login_styles() {
-    $logo_url = esc_url( get_template_directory_uri() . '/assets/img/logo-jimee-cosmetics-noir.png' );
     ?>
     <style>
     /* ── Background ── */
@@ -35,15 +34,22 @@ function jimee_login_styles() {
         min-height: 100vh;
     }
 
-    /* ── Logo ── */
+    /* ── Logo — site name as text ── */
     #login h1 a {
-        background-image: url('<?php echo $logo_url; ?>') !important;
-        background-size: contain !important;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        width: 200px !important;
-        height: 60px !important;
+        background-image: none !important;
+        text-indent: 0 !important;
+        overflow: visible !important;
+        width: auto !important;
+        height: auto !important;
+        font-size: 26px !important;
+        font-weight: 800 !important;
+        color: #064A2A !important;
+        font-family: 'Poppins', sans-serif !important;
+        text-decoration: none !important;
+        display: block !important;
+        text-align: center !important;
         margin: 0 auto 28px !important;
+        letter-spacing: -0.5px !important;
     }
 
     /* ── Form card ── */
