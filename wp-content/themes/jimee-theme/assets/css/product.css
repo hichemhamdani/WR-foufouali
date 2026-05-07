@@ -522,12 +522,12 @@
 /* ========== HORIZONTAL SCROLL SECTIONS ========== */
 .scroll-section { padding: 56px 0; position: relative; overflow: hidden; }
 .scroll-section .section-header {
-    padding: 0 32px; text-align: center; margin-bottom: 32px;
+    padding: 0 60px; text-align: center; margin-bottom: 32px;
     max-width: 1440px; margin-left: auto; margin-right: auto;
 }
 .scroll-track-wrapper { position: relative; }
 .scroll-track {
-    display: flex; gap: 24px; overflow-x: auto; padding: 0 32px 16px;
+    display: flex; gap: 24px; overflow-x: auto; padding: 0 60px 16px;
     scrollbar-width: none; -ms-overflow-style: none;
     scroll-snap-type: x mandatory; scroll-behavior: smooth;
 }
