@@ -20,7 +20,8 @@ function jimee_load_products_ajax() {
     $offset   = intval( $_POST['offset'] ?? 0 );
     $per_page = intval( $_POST['per_page'] ?? 8 );
     $orderby  = sanitize_text_field( $_POST['orderby'] ?? 'default' );
-    $filters  = array_map( 'intval', $_POST['filters'] ?? [] );
+    $filters      = array_map( 'intval', $_POST['filters'] ?? [] );
+    $filter_cats  = array_map( 'intval', $_POST['filter_cats'] ?? [] );
     $min_p    = floatval( $_POST['min_price'] ?? 0 );
     $max_p    = floatval( $_POST['max_price'] ?? 0 );
 
@@ -67,6 +68,16 @@ function jimee_load_products_ajax() {
             'taxonomy' => $filter_tax,
             'field'    => 'term_id',
             'terms'    => $filters,
+        ];
+    }
+
+    // Category filter (shop page)
+    if ( ! empty( $filter_cats ) ) {
+        $args['tax_query'][] = [
+            'taxonomy'         => 'product_cat',
+            'field'            => 'term_id',
+            'terms'            => $filter_cats,
+            'include_children' => true,
         ];
     }
 

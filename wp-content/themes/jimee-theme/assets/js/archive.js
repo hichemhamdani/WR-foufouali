@@ -91,10 +91,11 @@
 
     function updatePillStates() {
         if (!drawer) return;
-        var hasTax = drawer.querySelectorAll('[data-filter="cross"] input:checked').length > 0;
-        var hasSize = drawer.querySelectorAll('[data-filter="size"] input:checked').length > 0;
+        var hasTax    = drawer.querySelectorAll('[data-filter="cross"] input:checked').length > 0;
+        var hasCats   = drawer.querySelectorAll('[data-filter="cats"] input:checked').length > 0;
+        var hasSize   = drawer.querySelectorAll('[data-filter="size"] input:checked').length > 0;
         var hasLabels = drawer.querySelectorAll('[data-filter="labels"] input:checked').length > 0;
-        if (toggleBtn) toggleBtn.classList.toggle('active', hasTax || hasSize || hasLabels);
+        if (toggleBtn) toggleBtn.classList.toggle('active', hasTax || hasCats || hasSize || hasLabels);
     }
 
     /* ══════════════════════════════════════════════
@@ -131,6 +132,11 @@
             // Labels (Bio, Vegan)
             drawer.querySelectorAll('[data-filter="labels"] input:checked').forEach(function(cb) {
                 data.append('labels[]', cb.value);
+            });
+
+            // Category filter (shop page)
+            drawer.querySelectorAll('[data-filter="cats"] input:checked').forEach(function(cb) {
+                data.append('filter_cats[]', cb.value);
             });
         }
 

@@ -142,6 +142,25 @@ foreach ( $filter_terms as $ft ) {
         ? count( array_intersect( $ids, $ctx_ids ) )
         : count( $ids );
 }
+
+/* ── Category filter (shop page only) ─────────── */
+$cat_filter_terms  = [];
+$cat_filter_counts = [];
+if ( $is_shop ) {
+    $cat_filter_terms = get_terms([
+        'taxonomy'   => 'product_cat',
+        'parent'     => 0,
+        'hide_empty' => true,
+        'orderby'    => 'count',
+        'order'      => 'DESC',
+        'exclude'    => jimee_excluded_cats(),
+        'number'     => 30,
+    ]);
+    if ( is_wp_error( $cat_filter_terms ) ) $cat_filter_terms = [];
+    foreach ( $cat_filter_terms as $ct ) {
+        $cat_filter_counts[ $ct->term_id ] = (int) $ct->count;
+    }
+}
 ?>
 
 <!-- Prefetch subcategory pages -->
@@ -319,6 +338,25 @@ foreach ( $filter_terms as $ft ) {
         </div>
 
         <div class="filter-drawer-body">
+        <!-- SECTION: Catégorie (shop only) -->
+        <?php if ( $is_shop && ! empty( $cat_filter_terms ) ) : ?>
+        <div class="filter-drawer-section" id="filterSectionCats">
+            <h3 class="filter-drawer-section-title">Catégorie</h3>
+            <div class="filter-drawer-list" id="filterCatsList" data-filter="cats">
+                <?php foreach ( $cat_filter_terms as $ct ) :
+                    $ct_count = $cat_filter_counts[ $ct->term_id ] ?? 0;
+                    if ( $ct_count === 0 ) continue;
+                ?>
+                <label class="filter-checkbox" data-name="<?php echo esc_attr( strtolower( $ct->name ) ); ?>">
+                    <input type="checkbox" value="<?php echo esc_attr( $ct->term_id ); ?>">
+                    <span><?php echo esc_html( $ct->name ); ?></span>
+                    <span class="filter-count"><?php echo $ct_count; ?></span>
+                </label>
+                <?php endforeach; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <!-- SECTION: Marque / Catégorie -->
         <?php if ( ! empty( $filter_terms ) ) : ?>
         <div class="filter-drawer-section" id="filterSectionTax">
