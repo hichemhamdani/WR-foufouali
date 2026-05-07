@@ -157,6 +157,7 @@
     padding: 10px 20px; border-radius: 999px;
     background: #fff; border: 1.5px solid var(--border);
     font-size: 13px; font-weight: 500; transition: var(--transition); cursor: pointer;
+    color: var(--ink);
 }
 .filter-btn:hover, .filter-btn.active {
     border-color: var(--g900); background: var(--g900); color: #fff;
@@ -200,7 +201,8 @@
 .filter-drawer-close {
     width: 40px; height: 40px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    transition: var(--transition);
+    transition: var(--transition); background: none; border: none;
+    color: var(--ink); cursor: pointer;
 }
 .filter-drawer-close:hover { background: var(--warm-bg); }
 .filter-drawer-close svg { width: 24px; height: 24px; }

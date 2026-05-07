@@ -489,7 +489,8 @@
 .mobile-menu-close {
     width: 40px; height: 40px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    transition: var(--transition);
+    transition: var(--transition); background: none; border: none;
+    color: var(--ink); cursor: pointer;
 }
 .mobile-menu-close:hover { background: rgba(6,74,42,.07); }
 .mobile-menu-close svg { width: 24px; height: 24px; }
@@ -612,6 +613,7 @@
     padding: 16px 20px; font-size: 14px; font-weight: 500;
     border: none; border-bottom: 1px solid var(--border);
     width: 100%; text-align: left; cursor: pointer; background: none;
+    color: var(--ink);
 }
 .mobile-submenu-back svg { width: 20px; height: 20px; }
 .mobile-submenu-title {
@@ -674,7 +676,8 @@
 .cart-close {
     width: 36px; height: 36px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    transition: var(--transition);
+    transition: var(--transition); background: none; border: none;
+    color: var(--ink); cursor: pointer;
 }
 .cart-close:hover { background: var(--warm-bg); }
 .cart-close svg { width: 20px; height: 20px; }
