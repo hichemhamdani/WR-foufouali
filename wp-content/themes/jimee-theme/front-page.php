@@ -180,29 +180,46 @@ endif;
 
             <div class="hero__cards-row">
 
-            <!-- Carte A — Routine Solaire -->
-            <div class="hero__card hero__card--a">
-                <div class="hero__card-copy">
-                    <div class="hero__card-tag">Sélection du moment</div>
-                    <div class="hero__card-title">Routine Solaire<br>SPF &amp; Hydratation</div>
-                    <div class="hero__card-sub">Protégez et hydratez votre peau avec nos meilleurs soins solaires.</div>
-                </div>
-                <div class="hero__card-media">
-                    <img src="https://images.pexels.com/photos/31552021/pexels-photo-31552021.jpeg?auto=compress&cs=tinysrgb&w=500&q=85" alt="Routine solaire">
-                </div>
-            </div>
+            <?php
+            $card_a   = $hero_slides[1] ?? [];
+            $card_b   = $hero_slides[2] ?? [];
+            $img_a    = ! empty( $card_a['image'] ) ? wp_get_attachment_image_url( $card_a['image'], 'medium_large' ) : 'https://images.pexels.com/photos/31552021/pexels-photo-31552021.jpeg?auto=compress&cs=tinysrgb&w=500&q=85';
+            $img_b    = ! empty( $card_b['image'] ) ? wp_get_attachment_image_url( $card_b['image'], 'medium_large' ) : esc_url( $img_base . 'hero-body-care-category-homepage-highlight-2.png' );
+            $link_a   = ! empty( $card_a['link'] ) ? home_url( $card_a['link'] ) : home_url( '/boutique/' );
+            $link_b   = ! empty( $card_b['link'] ) ? home_url( $card_b['link'] ) : home_url( '/boutique/' );
+            ?>
 
-            <!-- Carte B — Promo Corps -->
-            <div class="hero__card hero__card--b">
+            <!-- Carte A — Slide 2 -->
+            <a href="<?php echo esc_url( $link_a ); ?>" class="hero__card hero__card--a">
                 <div class="hero__card-copy">
-                    <div class="hero__card-tag">Offre limitée</div>
-                    <div class="hero__card-pct">−30%<span> OFF</span></div>
-                    <div class="hero__card-title">Sur tous<br>les soins corps</div>
+                    <?php if ( ! empty( $card_a['eyebrow'] ) ) : ?>
+                    <div class="hero__card-tag"><?php echo esc_html( $card_a['eyebrow'] ); ?></div>
+                    <?php endif; ?>
+                    <div class="hero__card-title"><?php echo ! empty( $card_a['title'] ) ? wp_kses( $card_a['title'], [ 'em' => [], 'br' => [] ] ) : 'Sélection du moment'; ?></div>
+                    <?php if ( ! empty( $card_a['desc'] ) ) : ?>
+                    <div class="hero__card-sub"><?php echo esc_html( $card_a['desc'] ); ?></div>
+                    <?php endif; ?>
                 </div>
                 <div class="hero__card-media">
-                    <img src="<?php echo esc_url( $img_base . 'hero-body-care-category-homepage-highlight-2.png' ); ?>" alt="Soins corps">
+                    <img src="<?php echo esc_url( $img_a ); ?>" alt="<?php echo esc_attr( $card_a['eyebrow'] ?? '' ); ?>">
                 </div>
-            </div>
+            </a>
+
+            <!-- Carte B — Slide 3 -->
+            <a href="<?php echo esc_url( $link_b ); ?>" class="hero__card hero__card--b">
+                <div class="hero__card-copy">
+                    <?php if ( ! empty( $card_b['eyebrow'] ) ) : ?>
+                    <div class="hero__card-tag"><?php echo esc_html( $card_b['eyebrow'] ); ?></div>
+                    <?php endif; ?>
+                    <div class="hero__card-title"><?php echo ! empty( $card_b['title'] ) ? wp_kses( $card_b['title'], [ 'em' => [], 'br' => [] ] ) : 'Offre limitée'; ?></div>
+                    <?php if ( ! empty( $card_b['desc'] ) ) : ?>
+                    <div class="hero__card-sub"><?php echo esc_html( $card_b['desc'] ); ?></div>
+                    <?php endif; ?>
+                </div>
+                <div class="hero__card-media">
+                    <img src="<?php echo esc_url( $img_b ); ?>" alt="<?php echo esc_attr( $card_b['eyebrow'] ?? '' ); ?>">
+                </div>
+            </a>
 
             </div><!-- /.hero__cards-row -->
 
