@@ -34,8 +34,8 @@ $img = get_template_directory_uri() . '/assets/img/';
 <!-- STATS BAR -->
 <section class="about-stats">
     <div class="about-stat">
-        <span class="about-stat-number">146K+</span>
-        <span class="about-stat-label">Abonnés sur Instagram</span>
+        <span class="about-stat-number">6K+</span>
+        <span class="about-stat-label">Abonnés sur les réseaux sociaux</span>
     </div>
     <div class="about-stat-divider"></div>
     <div class="about-stat">
@@ -46,11 +46,6 @@ $img = get_template_directory_uri() . '/assets/img/';
     <div class="about-stat">
         <span class="about-stat-number">100+</span>
         <span class="about-stat-label">Marques internationales</span>
-    </div>
-    <div class="about-stat-divider"></div>
-    <div class="about-stat">
-        <span class="about-stat-number">100K+</span>
-        <span class="about-stat-label">Fans sur Facebook</span>
     </div>
 </section>
 
@@ -162,7 +157,7 @@ $img = get_template_directory_uri() . '/assets/img/';
         </div>
         <div class="about-boutique-social">
             <h3>Rejoignez la communauté</h3>
-            <p>Plus de 146 000 passionné(e)s de beauté nous suivent déjà.</p>
+            <p>Plus de 6 000 passionné(e)s de beauté nous suivent déjà.</p>
             <div class="about-social-links">
                 <a href="https://www.instagram.com/ali.adem.5492216/" target="_blank" rel="noopener" class="about-social-link">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
