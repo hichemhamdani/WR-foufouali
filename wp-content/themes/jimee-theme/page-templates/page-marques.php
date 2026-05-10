@@ -59,7 +59,7 @@ $featured_brands = get_terms([
     'number'     => 10,
 ]);
 if ( ! is_wp_error( $featured_brands ) && ! empty( $featured_brands ) ) : ?>
-<section style="max-width:1440px;margin:0 auto;padding:24px 32px 0">
+<section class="brands-phares-wrap" style="max-width:1440px;margin:0 auto;padding:24px 32px 0">
     <h2 style="font-size:18px;font-weight:300;margin-bottom:16px">Marques <em style="font-weight:600;font-style:italic">phares</em></h2>
     <div class="brands-slider">
         <?php foreach ( $featured_brands as $fb ) :

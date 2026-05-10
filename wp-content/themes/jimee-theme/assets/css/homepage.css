@@ -530,6 +530,11 @@
     .flash__prod { min-width: 220px; flex: 0 0 220px; scroll-snap-align: start; }
     .brands__row { grid-template-columns: repeat(3, 1fr); }
     .brands__row .brand-card { height: 80px !important; padding: 10px 12px !important; }
+    /* Brands phares slider — fix right-edge cut on mobile */
+    .brands-phares-wrap { padding-left: 0 !important; padding-right: 0 !important; }
+    .brands-slider { padding: 0 16px 16px; }
+    .brands-slider::after { content: ''; flex-shrink: 0; width: 16px; }
+    .brands-phares-wrap .brand-card { width: 78vw; max-width: 280px; }
     .pb { grid-template-columns: 1fr; }
     .pb__content { padding: 40px 28px; }
     .pb__media { min-height: 240px; }

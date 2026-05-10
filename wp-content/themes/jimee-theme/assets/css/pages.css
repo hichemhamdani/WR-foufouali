@@ -532,7 +532,7 @@
     }
     .legal-content, .faq-content { padding-left: 16px; padding-right: 16px; }
     .legal-card { padding: 24px; }
-    .brands-letter-section { padding: 16px; }
+    .brands-letter-section { padding: 12px 16px; overflow: hidden; }
     .wishlist-grid-wrapper { padding: 16px 16px 60px; }
 
     /* About page mobile */
