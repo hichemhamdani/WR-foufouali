@@ -752,10 +752,22 @@
     .tabs-nav { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
     .tabs-nav::-webkit-scrollbar { display: none; }
     .tab-btn { padding: 16px 22px; font-size: 13px; white-space: nowrap; }
-    .cta-capsule { gap: 8px; }
+    .cta-capsule {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "qty atc"
+            "wish buy";
+        gap: 10px;
+        align-items: center;
+    }
+    .cta-qty  { grid-area: qty; }
+    .cta-atc  { grid-area: atc; }
+    .cta-buy  { grid-area: buy; }
+    .cta-wish { grid-area: wish; }
     .cta-qty-btn { width: 40px; height: 48px; }
     .cta-atc { padding: 14px 18px; }
-    .cta-buy { padding: 12px 18px; }
+    .cta-buy { padding: 12px 18px; width: 100%; justify-content: center; }
     .brand-block-dark .brand-block-card { padding: 40px 24px; flex-direction: column; text-align: center; gap: 24px; }
     .brand-block-dark .brand-block-desc { margin: 0 auto 20px; }
 }
