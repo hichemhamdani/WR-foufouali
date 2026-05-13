@@ -23,12 +23,15 @@
 </nav>
 <?php else : ?>
 <!-- TOP BAR -->
-<?php $topbar_msg = get_option( 'jimee_topbar_message', '' ); ?>
-<?php if ( $topbar_msg ) : ?>
 <div class="topbar">
-    <span class="topbar__msg"><?php echo wp_kses( $topbar_msg, [ 'strong' => [], 'em' => [] ] ); ?></span>
+    <span class="topbar__msg">
+        <strong>Soldes Printemps</strong>
+        <span class="topbar__dot"></span>
+        Jusqu'à <strong>−35%</strong> sur une sélection de soins visage et cosmétiques
+        <span class="topbar__dot"></span>
+        Code <strong>FOUFOU26</strong>
+    </span>
 </div>
-<?php endif; ?>
 
 <!-- HEADER (sticky) -->
 <header class="header" id="header">

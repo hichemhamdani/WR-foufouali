@@ -18,11 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 add_action( 'admin_init', 'jimee_banners_register' );
 function jimee_banners_register() {
-    register_setting( 'jimee_banners', 'jimee_topbar_message', [
-        'sanitize_callback' => function( $v ) {
-            return wp_kses( $v, [ 'strong' => [], 'em' => [] ] );
-        },
-    ] );
     register_setting( 'jimee_banners', 'jimee_announcements' );
     register_setting( 'jimee_banners', 'jimee_hero_slides' );
     register_setting( 'jimee_banners', 'jimee_promo_banner' );
@@ -133,7 +128,6 @@ function jimee_banners_page() {
         wp_die( 'Accès refusé.' );
     }
 
-    $topbar_msg      = get_option( 'jimee_topbar_message', '' );
     $announcements   = jimee_get_announcements();
     $hero_slides     = jimee_get_hero_slides();
     $promo           = jimee_get_promo_banner();
@@ -151,19 +145,6 @@ function jimee_banners_page() {
 
         <form method="post" action="options.php">
             <?php settings_fields( 'jimee_banners' ); ?>
-
-            <!-- ── MESSAGE TOPBAR ── -->
-            <div class="jimee-admin-card">
-                <h2>Message du bandeau supérieur</h2>
-                <p class="description">S'affiche en haut de toutes les pages. Laissez vide pour masquer le bandeau. Balises autorisées : <code>&lt;strong&gt;</code> et <code>&lt;em&gt;</code>.</p>
-                <input
-                    type="text"
-                    name="jimee_topbar_message"
-                    value="<?php echo esc_attr( $topbar_msg ); ?>"
-                    class="large-text"
-                    placeholder="Ex : Code <strong>FOUFOU26</strong> — Soldes jusqu'à <strong>−35%</strong>"
-                >
-            </div>
 
             <!-- ── ANNONCES ── -->
             <div class="jimee-admin-card">
