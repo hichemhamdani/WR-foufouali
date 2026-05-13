@@ -460,9 +460,16 @@ function jimee_contact_handler() {
     $headers = [
         'Content-Type: text/html; charset=UTF-8',
         'From: ' . $site_name . ' <' . get_option( 'admin_email' ) . '>',
-        'Reply-To: ' . $name . ' <' . $email . '>',
     ];
+    // Reply-To only if name has no special chars that break headers
+    $safe_name = preg_replace( '/[^\p{L}\p{N} \.\-\']/u', '', $name );
+    if ( $safe_name && $email ) {
+        $headers[] = 'Reply-To: ' . $safe_name . ' <' . $email . '>';
+    }
 
-    wp_mail( $to, $mail_subject, $body, $headers );
+    $sent = wp_mail( $to, $mail_subject, $body, $headers );
+    if ( ! $sent ) {
+        wp_send_json_error( 'Erreur lors de l\'envoi du message. Veuillez réessayer.' );
+    }
     wp_send_json_success( 'Message envoyé avec succès.' );
 }
